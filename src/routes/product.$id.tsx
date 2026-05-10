@@ -96,7 +96,7 @@ function ProductPage() {
             <div className="mt-8">
               <p className="text-sm font-medium mb-3">Color</p>
               <div className="flex gap-3">
-                {product.colors.map((c) => (
+                {product.colors.map((c: string) => (
                   <button
                     key={c}
                     onClick={() => setColor(c)}
@@ -157,7 +157,7 @@ function ProductPage() {
               <div className="py-6 animate-fade-in" key={tab}>
                 {tab === "specs" && (
                   <dl className="divide-y divide-border">
-                    {product.specs.map((s) => (
+                    {product.specs.map((s: { label: string; value: string }) => (
                       <div key={s.label} className="grid grid-cols-2 py-3 text-sm">
                         <dt className="text-muted-foreground">{s.label}</dt>
                         <dd className="font-medium">{s.value}</dd>
