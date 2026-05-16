@@ -3,9 +3,9 @@ import { Instagram, Twitter, Youtube, Github } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border mt-32">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10 py-16 grid gap-12 md:grid-cols-4">
-        <div>
+    <footer className="border-t border-border mt-20 sm:mt-32">
+      <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-12 sm:py-16 grid gap-10 sm:gap-12 grid-cols-2 md:grid-cols-4">
+        <div className="col-span-2 md:col-span-1">
           <Link to="/" className="flex items-center gap-2 font-semibold text-lg">
             <span className="size-7 rounded-xl bg-[image:var(--gradient-primary)] grid place-items-center text-primary-foreground text-xs font-bold">B</span>
             Blue Apple
@@ -40,7 +40,7 @@ export function Footer() {
         ))}
       </div>
       <div className="border-t border-border">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10 py-6 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-foreground gap-2">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-foreground gap-2 text-center sm:text-left">
           <p>© {new Date().getFullYear()} Blue Apple Inc. All rights reserved.</p>
           <p>Designed in California. Built for the world.</p>
         </div>

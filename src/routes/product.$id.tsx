@@ -48,23 +48,23 @@ function ProductPage() {
 
   return (
     <PageShell>
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 py-10 lg:py-16">
-        <div className="grid lg:grid-cols-2 gap-12">
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-6 sm:py-10 lg:py-16">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Gallery */}
           <div className="lg:sticky lg:top-24 self-start">
-            <div className="relative aspect-square rounded-[2rem] surface overflow-hidden">
+            <div className="relative aspect-square rounded-3xl sm:rounded-[2rem] surface overflow-hidden">
               <div className="absolute inset-0 bg-[image:var(--gradient-hero)] opacity-70" />
               <img
                 src={product.image}
                 alt={product.name}
-                className="relative h-full w-full object-contain p-12 animate-fade-in"
+                className="relative h-full w-full object-contain p-8 sm:p-12 animate-fade-in"
                 key={color}
               />
             </div>
-            <div className="mt-4 grid grid-cols-4 gap-3">
+            <div className="mt-3 sm:mt-4 grid grid-cols-4 gap-2 sm:gap-3">
               {[0, 1, 2, 3].map((i) => (
-                <div key={i} className="aspect-square rounded-2xl surface border border-border overflow-hidden cursor-pointer hover:border-primary transition">
-                  <img src={product.image} alt="" className="h-full w-full object-contain p-3 opacity-80" />
+                <div key={i} className="aspect-square rounded-xl sm:rounded-2xl surface border border-border overflow-hidden cursor-pointer hover:border-primary transition">
+                  <img src={product.image} alt="" className="h-full w-full object-contain p-2 sm:p-3 opacity-80" />
                 </div>
               ))}
             </div>
@@ -72,11 +72,11 @@ function ProductPage() {
 
           {/* Info */}
           <div>
-            <p className="text-sm uppercase tracking-widest text-primary">{product.category}</p>
-            <h1 className="mt-2 text-4xl lg:text-5xl font-semibold tracking-tight">{product.name}</h1>
-            <p className="mt-3 text-lg text-muted-foreground">{product.tagline}</p>
+            <p className="text-xs sm:text-sm uppercase tracking-widest text-primary">{product.category}</p>
+            <h1 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight">{product.name}</h1>
+            <p className="mt-2 sm:mt-3 text-base sm:text-lg text-muted-foreground">{product.tagline}</p>
 
-            <div className="mt-4 flex items-center gap-2 text-sm">
+            <div className="mt-3 sm:mt-4 flex items-center gap-2 text-sm">
               <div className="flex text-primary">
                 {[...Array(5)].map((_, i) => <Star key={i} className="size-4 fill-current" />)}
               </div>
@@ -84,16 +84,16 @@ function ProductPage() {
               <span className="text-muted-foreground">({product.reviews} reviews)</span>
             </div>
 
-            <div className="mt-8 flex items-baseline gap-3">
-              <span className="text-4xl font-semibold">${product.price}</span>
+            <div className="mt-6 sm:mt-8 flex items-baseline gap-3">
+              <span className="text-3xl sm:text-4xl font-semibold">${product.price}</span>
               {product.originalPrice && (
-                <span className="text-lg text-muted-foreground line-through">${product.originalPrice}</span>
+                <span className="text-base sm:text-lg text-muted-foreground line-through">${product.originalPrice}</span>
               )}
             </div>
 
-            <p className="mt-6 text-foreground/80 leading-relaxed">{product.description}</p>
+            <p className="mt-5 sm:mt-6 text-sm sm:text-base text-foreground/80 leading-relaxed">{product.description}</p>
 
-            <div className="mt-8">
+            <div className="mt-6 sm:mt-8">
               <p className="text-sm font-medium mb-3">Color</p>
               <div className="flex gap-3">
                 {product.colors.map((c: string) => (
@@ -108,33 +108,33 @@ function ProductPage() {
               </div>
             </div>
 
-            <div className="mt-8 flex items-center gap-4">
-              <div className="flex items-center rounded-full border border-border">
+            <div className="mt-6 sm:mt-8 flex items-center gap-2 sm:gap-4">
+              <div className="flex items-center rounded-full border border-border shrink-0">
                 <button onClick={() => setQty((q) => Math.max(1, q - 1))} className="size-11 grid place-items-center hover:bg-muted rounded-l-full">
                   <Minus className="size-4" />
                 </button>
-                <span className="w-10 text-center font-medium">{qty}</span>
+                <span className="w-8 sm:w-10 text-center font-medium">{qty}</span>
                 <button onClick={() => setQty((q) => q + 1)} className="size-11 grid place-items-center hover:bg-muted rounded-r-full">
                   <Plus className="size-4" />
                 </button>
               </div>
-              <Link to="/cart" className="btn-primary flex-1 inline-flex items-center justify-center gap-2 py-3.5 rounded-full font-medium">
+              <Link to="/cart" className="btn-primary flex-1 inline-flex items-center justify-center gap-2 py-3.5 rounded-full font-medium text-sm sm:text-base">
                 <ShoppingBag className="size-4" /> Add to cart
               </Link>
-              <button className="size-12 grid place-items-center rounded-full border border-border hover:bg-muted">
+              <button className="size-11 sm:size-12 grid place-items-center rounded-full border border-border hover:bg-muted shrink-0">
                 <Heart className="size-5" />
               </button>
             </div>
 
-            <div className="mt-8 grid grid-cols-3 gap-3 text-xs">
+            <div className="mt-6 sm:mt-8 grid grid-cols-3 gap-2 sm:gap-3 text-xs">
               {[
                 { Icon: Truck, t: "Free shipping" },
                 { Icon: RotateCw, t: "30-day returns" },
                 { Icon: Shield, t: "2-year warranty" },
               ].map((b) => (
-                <div key={b.t} className="rounded-2xl border border-border p-4 text-center">
+                <div key={b.t} className="rounded-xl sm:rounded-2xl border border-border p-3 sm:p-4 text-center">
                   <b.Icon className="size-5 mx-auto text-primary" />
-                  <p className="mt-2 font-medium">{b.t}</p>
+                  <p className="mt-2 font-medium text-[11px] sm:text-xs">{b.t}</p>
                 </div>
               ))}
             </div>

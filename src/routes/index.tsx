@@ -87,42 +87,42 @@ function Home() {
       </section>
 
       {/* CATEGORIES */}
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 py-20">
-        <div className="flex items-end justify-between mb-10">
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-12 sm:py-20">
+        <div className="flex items-end justify-between mb-6 sm:mb-10">
           <div>
-            <h2 className="text-3xl sm:text-4xl font-semibold">Shop by category</h2>
-            <p className="text-muted-foreground mt-2">Find what you love.</p>
+            <h2 className="text-2xl sm:text-4xl font-semibold">Shop by category</h2>
+            <p className="text-sm sm:text-base text-muted-foreground mt-2">Find what you love.</p>
           </div>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
           {categories.map((c, i) => (
             <Link
               key={c.slug}
               to="/accessories"
-              className="group rounded-3xl border border-border bg-card p-6 text-center hover:shadow-elevated hover:-translate-y-1 transition-all duration-300 animate-fade-up"
+              className="group rounded-2xl sm:rounded-3xl border border-border bg-card p-4 sm:p-6 text-center hover:shadow-elevated hover:-translate-y-1 transition-all duration-300 animate-fade-up"
               style={{ animationDelay: `${i * 0.05}s` }}
             >
-              <div className="size-14 mx-auto rounded-2xl bg-[image:var(--gradient-primary)] grid place-items-center text-2xl shadow-glow group-hover:scale-110 transition-transform">
+              <div className="size-11 sm:size-14 mx-auto rounded-xl sm:rounded-2xl bg-[image:var(--gradient-primary)] grid place-items-center text-xl sm:text-2xl shadow-glow group-hover:scale-110 transition-transform">
                 <span className="grayscale-0">{c.icon}</span>
               </div>
-              <p className="mt-4 text-sm font-medium">{c.name}</p>
+              <p className="mt-3 sm:mt-4 text-xs sm:text-sm font-medium">{c.name}</p>
             </Link>
           ))}
         </div>
       </section>
 
       {/* FEATURED PRODUCTS */}
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 py-20">
-        <div className="flex items-end justify-between mb-10">
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-12 sm:py-20">
+        <div className="flex items-end justify-between mb-6 sm:mb-10">
           <div>
-            <h2 className="text-3xl sm:text-4xl font-semibold">Featured products</h2>
-            <p className="text-muted-foreground mt-2">Hand-picked for you.</p>
+            <h2 className="text-2xl sm:text-4xl font-semibold">Featured products</h2>
+            <p className="text-sm sm:text-base text-muted-foreground mt-2">Hand-picked for you.</p>
           </div>
           <Link to="/phones" className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-primary hover:gap-2 transition-all">
             View all <ArrowRight className="size-4" />
           </Link>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {products.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}
@@ -130,31 +130,31 @@ function Home() {
       </section>
 
       {/* DEAL BANNER */}
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 py-20">
-        <div className="relative overflow-hidden rounded-[2rem] bg-accent text-accent-foreground p-10 lg:p-16">
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-12 sm:py-20">
+        <div className="relative overflow-hidden rounded-3xl sm:rounded-[2rem] bg-accent text-accent-foreground p-7 sm:p-10 lg:p-16">
           <div className="absolute -top-24 -right-24 size-96 rounded-full bg-[image:var(--gradient-primary)] opacity-40 blur-3xl" />
-          <div className="relative grid lg:grid-cols-2 gap-10 items-center">
+          <div className="relative grid lg:grid-cols-2 gap-8 lg:gap-10 items-center">
             <div>
-              <p className="text-sm uppercase tracking-widest opacity-70">Limited Time</p>
-              <h3 className="mt-3 text-4xl lg:text-5xl font-semibold leading-tight">
+              <p className="text-xs sm:text-sm uppercase tracking-widest opacity-70">Limited Time</p>
+              <h3 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight">
                 Up to 30% off accessories.
               </h3>
-              <p className="mt-4 opacity-80 max-w-md">
+              <p className="mt-3 sm:mt-4 text-sm sm:text-base opacity-80 max-w-md">
                 Bundle your favorite chargers, cases and earbuds for unbeatable savings.
               </p>
-              <Link to="/deals" className="mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-background text-foreground font-medium hover:opacity-90 transition">
+              <Link to="/deals" className="mt-6 sm:mt-8 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-background text-foreground font-medium hover:opacity-90 transition">
                 Shop deals <ArrowRight className="size-4" />
               </Link>
             </div>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-2 sm:gap-4">
               {[
                 { label: "Free shipping", value: "Worldwide" },
                 { label: "30 days", value: "Easy returns" },
                 { label: "2 year", value: "Warranty" },
               ].map((s) => (
-                <div key={s.label} className="rounded-2xl bg-white/5 backdrop-blur p-5 border border-white/10">
-                  <p className="text-xl font-semibold">{s.label}</p>
-                  <p className="text-xs opacity-70 mt-1">{s.value}</p>
+                <div key={s.label} className="rounded-xl sm:rounded-2xl bg-white/5 backdrop-blur p-3 sm:p-5 border border-white/10">
+                  <p className="text-sm sm:text-xl font-semibold">{s.label}</p>
+                  <p className="text-[10px] sm:text-xs opacity-70 mt-1">{s.value}</p>
                 </div>
               ))}
             </div>
@@ -163,23 +163,23 @@ function Home() {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 py-20">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <h2 className="text-3xl sm:text-4xl font-semibold">Loved by millions</h2>
-          <p className="text-muted-foreground mt-3">Real words from real people.</p>
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-12 sm:py-20">
+        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-4xl font-semibold">Loved by millions</h2>
+          <p className="text-sm sm:text-base text-muted-foreground mt-3">Real words from real people.</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
           {[
             { name: "Maya K.", role: "Designer", quote: "The cleanest tech experience I've ever owned. The Pro feels like the future." },
             { name: "Daniel R.", role: "Engineer", quote: "Buds Air Pro changed my commute. The ANC is unreal at this price." },
             { name: "Aisha N.", role: "Photographer", quote: "Watch Edge keeps up with everything. The battery life is incredible." },
           ].map((t) => (
-            <div key={t.name} className="rounded-3xl border border-border bg-card p-8 shadow-soft">
+            <div key={t.name} className="rounded-2xl sm:rounded-3xl border border-border bg-card p-6 sm:p-8 shadow-soft">
               <div className="flex gap-0.5 text-primary mb-4">
                 {[...Array(5)].map((_, i) => <Star key={i} className="size-4 fill-current" />)}
               </div>
-              <p className="text-foreground/90 leading-relaxed">"{t.quote}"</p>
-              <div className="mt-6 flex items-center gap-3">
+              <p className="text-sm sm:text-base text-foreground/90 leading-relaxed">"{t.quote}"</p>
+              <div className="mt-5 sm:mt-6 flex items-center gap-3">
                 <div className="size-10 rounded-full bg-[image:var(--gradient-primary)]" />
                 <div>
                   <p className="text-sm font-semibold">{t.name}</p>
@@ -192,20 +192,20 @@ function Home() {
       </section>
 
       {/* FEATURES STRIP */}
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 py-20">
-        <div className="grid sm:grid-cols-3 gap-6">
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-12 sm:py-20">
+        <div className="grid sm:grid-cols-3 gap-3 sm:gap-6">
           {[
             { Icon: Truck, title: "Free shipping", desc: "On orders over $50" },
             { Icon: ShieldCheck, title: "2-year warranty", desc: "Premium protection" },
             { Icon: Headphones, title: "24/7 support", desc: "We're always here" },
           ].map((f) => (
-            <div key={f.title} className="flex items-center gap-4 rounded-2xl border border-border bg-card p-6">
-              <div className="size-12 grid place-items-center rounded-xl bg-primary/10 text-primary">
+            <div key={f.title} className="flex items-center gap-4 rounded-2xl border border-border bg-card p-4 sm:p-6">
+              <div className="size-11 sm:size-12 grid place-items-center rounded-xl bg-primary/10 text-primary shrink-0">
                 <f.Icon className="size-5" />
               </div>
               <div>
-                <p className="font-semibold">{f.title}</p>
-                <p className="text-sm text-muted-foreground">{f.desc}</p>
+                <p className="font-semibold text-sm sm:text-base">{f.title}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground">{f.desc}</p>
               </div>
             </div>
           ))}
@@ -213,13 +213,13 @@ function Home() {
       </section>
 
       {/* NEWSLETTER */}
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 py-20">
-        <div className="rounded-[2rem] hero-bg border border-border p-10 lg:p-16 text-center">
-          <h2 className="text-3xl sm:text-4xl font-semibold">Stay in the loop</h2>
-          <p className="mt-3 text-muted-foreground max-w-md mx-auto">
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-12 sm:py-20">
+        <div className="rounded-3xl sm:rounded-[2rem] hero-bg border border-border p-7 sm:p-10 lg:p-16 text-center">
+          <h2 className="text-2xl sm:text-4xl font-semibold">Stay in the loop</h2>
+          <p className="mt-3 text-sm sm:text-base text-muted-foreground max-w-md mx-auto">
             Be first to know about new launches, exclusive deals and stories.
           </p>
-          <form className="mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
+          <form className="mt-7 sm:mt-8 flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
             <input
               type="email"
               placeholder="you@example.com"

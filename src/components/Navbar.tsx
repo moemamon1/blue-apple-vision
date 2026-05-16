@@ -51,8 +51,8 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-1">
-          <button className="size-10 grid place-items-center rounded-full hover:bg-muted transition-colors" aria-label="Search">
+        <div className="flex items-center gap-0.5 sm:gap-1">
+          <button className="hidden sm:grid size-10 place-items-center rounded-full hover:bg-muted transition-colors" aria-label="Search">
             <Search className="size-[18px]" />
           </button>
           <Link
@@ -63,7 +63,7 @@ export function Navbar() {
             <ShoppingBag className="size-[18px]" />
             <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-primary" />
           </Link>
-          <button className="size-10 grid place-items-center rounded-full hover:bg-muted transition-colors" aria-label="Account">
+          <button className="hidden sm:grid size-10 place-items-center rounded-full hover:bg-muted transition-colors" aria-label="Account">
             <User className="size-[18px]" />
           </button>
           <button
