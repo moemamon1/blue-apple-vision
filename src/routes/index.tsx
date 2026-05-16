@@ -20,54 +20,52 @@ function Home() {
     <PageShell>
       {/* HERO */}
       <section className="relative overflow-hidden hero-bg">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10 pt-16 pb-24 lg:pt-28 lg:pb-40 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 pt-10 pb-16 lg:pt-28 lg:pb-40 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="relative z-10 animate-fade-up">
             <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass text-xs font-medium">
               <Sparkles className="size-3.5 text-primary" />
               New • Blue Apple Pro is here
             </span>
-            <h1 className="mt-6 text-5xl sm:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.05]">
+            <h1 className="mt-5 text-4xl sm:text-6xl lg:text-7xl font-semibold tracking-tight leading-[1.05]">
               Smart Tech.
               <br />
               <span className="gradient-text">Minimal Design.</span>
             </h1>
-            <p className="mt-6 text-lg text-muted-foreground max-w-md">
+            <p className="mt-5 text-base sm:text-lg text-muted-foreground max-w-md">
               Beautifully engineered devices that blend into your life. Built to last, designed to delight.
             </p>
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-7 sm:mt-10 flex flex-col sm:flex-row gap-3">
               <Link
                 to="/phones"
-                className="btn-primary inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium"
+                className="btn-primary inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-medium"
               >
                 Shop Phones <ArrowRight className="size-4" />
               </Link>
               <Link
                 to="/accessories"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-medium border border-border bg-background hover:bg-muted transition-colors"
+                className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-medium border border-border bg-background hover:bg-muted transition-colors"
               >
                 Explore Accessories
               </Link>
             </div>
 
-            <div className="mt-12 flex items-center gap-8 text-sm text-muted-foreground">
+            <div className="mt-10 sm:mt-12 grid grid-cols-3 gap-3 sm:gap-8 text-sm text-muted-foreground">
               <div>
-                <p className="text-2xl font-semibold text-foreground">2M+</p>
-                <p>Happy customers</p>
+                <p className="text-xl sm:text-2xl font-semibold text-foreground">2M+</p>
+                <p className="text-xs sm:text-sm">Customers</p>
               </div>
-              <div className="h-10 w-px bg-border" />
-              <div>
-                <p className="text-2xl font-semibold text-foreground">4.9★</p>
-                <p>Average rating</p>
+              <div className="border-l border-border pl-3 sm:pl-0 sm:border-0">
+                <p className="text-xl sm:text-2xl font-semibold text-foreground">4.9★</p>
+                <p className="text-xs sm:text-sm">Rating</p>
               </div>
-              <div className="h-10 w-px bg-border" />
-              <div>
-                <p className="text-2xl font-semibold text-foreground">120+</p>
-                <p>Countries</p>
+              <div className="border-l border-border pl-3 sm:pl-0 sm:border-0">
+                <p className="text-xl sm:text-2xl font-semibold text-foreground">120+</p>
+                <p className="text-xs sm:text-sm">Countries</p>
               </div>
             </div>
           </div>
 
-          <div className="relative h-[420px] sm:h-[560px] lg:h-[640px]">
+          <div className="relative h-[340px] sm:h-[560px] lg:h-[640px] order-first lg:order-none">
             <div className="absolute inset-0 -m-10 bg-[image:var(--gradient-primary)] opacity-20 blur-3xl rounded-full animate-glow" />
             <img
               src={heroPhone}
