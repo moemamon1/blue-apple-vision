@@ -11,7 +11,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Genuine iPhones imported from abroad and delivered across Sudan. iPhone 13 Pro Max through iPhone 17 Pro Max.",
+          "Genuine iPhones imported from abroad and delivered across Sudan.",
       },
       {
         property: "og:title",
@@ -19,14 +19,15 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:description",
-        content: "Genuine iPhones imported and delivered across Sudan.",
+        content:
+          "Genuine iPhones imported and delivered across Sudan.",
       },
     ],
   }),
+
   component: PhonesPage,
 });
 
-// Sort order so newer iPhones appear first
 const MODEL_ORDER = [
   "iPhone 17 Pro Max",
   "iPhone 17 Pro",
@@ -60,8 +61,13 @@ function PhonesPage() {
   useEffect(() => {
     let cancelled = false;
 
-    fetchProducts("vendor:Apple AND product_type:Smartphones", 50)
-      .then((products) => {
+    async function loadProducts() {
+      try {
+        const products = await fetchProducts(
+          "vendor:Apple AND product_type:Smartphones",
+          50
+        );
+
         if (cancelled) return;
 
         const sorted = [...products].sort(
@@ -69,17 +75,20 @@ function PhonesPage() {
         );
 
         setPhones(sorted);
-      })
-      .catch((e) => {
+      } catch (err: any) {
+        console.error(err);
+
         if (!cancelled) {
-          setError(e.message);
+          setError(err.message || "Failed to load products");
         }
-      })
-      .finally(() => {
+      } finally {
         if (!cancelled) {
           setLoading(false);
         }
-      });
+      }
+    }
+
+    loadProducts();
 
     return () => {
       cancelled = true;
@@ -94,28 +103,29 @@ function PhonesPage() {
         </p>
 
         <h1 className="mt-3 text-5xl lg:text-6xl font-semibold tracking-tight">
-          Genuine Apple,{" "}
+          Genuine Apple{" "}
           <span className="gradient-text">
             delivered in Sudan.
           </span>
         </h1>
 
         <p className="mt-4 text-lg text-muted-foreground max-w-xl">
-          We import authentic iPhones from abroad and deliver them across
-          Sudan — from the iPhone 13 Pro Max to the latest iPhone 17 Pro Max.
+          We import authentic iPhones from abroad and deliver
+          them across Sudan — from the iPhone 13 Pro Max to
+          the latest iPhone 17 Pro Max.
         </p>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 lg:px-10 pb-20">
         {loading && (
           <p className="text-muted-foreground">
-            Loading iPhones…
+            Loading iPhones...
           </p>
         )}
 
         {error && (
-          <p className="text-destructive">
-            Couldn't load products: {error}
+          <p className="text-red-500">
+            Error: {error}
           </p>
         )}
 
@@ -125,14 +135,16 @@ function PhonesPage() {
           </p>
         )}
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {phones.map((p) => (
-            <ShopifyProductCard
-              key={p.id}
-              product={p}
-            />
-          ))}
-        </div>
+        {!loading && !error && phones.length > 0 && (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {phones.map((phone) => (
+              <ShopifyProductCard
+                key={phone.id}
+                product={phone}
+              />
+            ))}
+          </div>
+        )}
       </section>
     </PageShell>
   );
