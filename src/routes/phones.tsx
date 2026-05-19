@@ -7,10 +7,10 @@ import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
 export const Route = createFileRoute("/phones")({
   head: () => ({
     meta: [
-      { title: "Phones — Blue Apple" },
-      { name: "description", content: "Shop the latest iPhone 13 Pro Max through iPhone 16 Pro Max." },
-      { property: "og:title", content: "Phones — Blue Apple" },
-      { property: "og:description", content: "Premium smartphones from Blue Apple." },
+      { title: "iPhones in Sudan — Blue Apple" },
+      { name: "description", content: "Genuine iPhones imported from abroad and delivered across Sudan. iPhone 13 Pro Max through iPhone 17 Pro Max." },
+      { property: "og:title", content: "iPhones in Sudan — Blue Apple" },
+      { property: "og:description", content: "Genuine iPhones imported and delivered across Sudan." },
     ],
   }),
   component: PhonesPage,
@@ -18,6 +18,10 @@ export const Route = createFileRoute("/phones")({
 
 // Sort order so newer iPhones appear first
 const MODEL_ORDER = [
+  "iPhone 17 Pro Max",
+  "iPhone 17 Pro",
+  "iPhone 17 Plus",
+  "iPhone 17",
   "iPhone 16 Pro Max",
   "iPhone 16 Pro",
   "iPhone 16 Plus",
@@ -45,7 +49,7 @@ function PhonesPage() {
 
   useEffect(() => {
     let cancelled = false;
-    fetchProducts("title:iPhone*", 50)
+    fetchProducts("vendor:Apple AND product_type:Smartphones", 50)
       .then((products) => {
         if (cancelled) return;
         const sorted = [...products].sort((a, b) => rank(a.title) - rank(b.title));
@@ -61,12 +65,12 @@ function PhonesPage() {
   return (
     <PageShell>
       <section className="mx-auto max-w-7xl px-6 lg:px-10 py-16 lg:py-24 hero-bg">
-        <p className="text-sm uppercase tracking-widest text-primary">Smartphones</p>
+        <p className="text-sm uppercase tracking-widest text-primary">iPhones · Imported to Sudan</p>
         <h1 className="mt-3 text-5xl lg:text-6xl font-semibold tracking-tight">
-          The phone, <span className="gradient-text">reimagined.</span>
+          Genuine Apple, <span className="gradient-text">delivered in Sudan.</span>
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-xl">
-          From the iPhone 13 Pro Max to the latest iPhone 16 Pro Max — every model, ready to ship.
+          We import authentic iPhones from abroad and deliver them across Sudan — from the iPhone 13 Pro Max to the latest iPhone 17 Pro Max.
         </p>
       </section>
       <section className="mx-auto max-w-7xl px-6 lg:px-10 pb-20">
