@@ -50,7 +50,7 @@ function ProductDetailPage() {
   const addItem = useCartStore((s) => s.addItem);
   const [adding, setAdding] = useState(false);
 
-  const images = product.images.edges.map((e) => e.node);
+  const images = product.images.edges.map((e: { node: { url: string; altText: string | null } }) => e.node);
   const [activeImage, setActiveImage] = useState(images[0]?.url ?? "");
 
   const handleAdd = async () => {
@@ -198,7 +198,7 @@ function ProductDetailPage() {
         <section className="mx-auto max-w-7xl px-6 lg:px-10 py-16">
           <h2 className="text-2xl font-semibold mb-6">You may also like</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {related.map((p) => (
+            {related.map((p: import("@/lib/shopify").ShopifyProduct) => (
               <ShopifyProductCard key={p.id} product={p} />
             ))}
           </div>
