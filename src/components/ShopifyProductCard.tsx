@@ -1,21 +1,57 @@
-import { ShoppingBag } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { ShoppingBag, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 import type { ShopifyProduct } from "@/lib/shopify";
+import { useCartStore } from "@/stores/cartStore";
 
 export function ShopifyProductCard({ product }: { product: ShopifyProduct }) {
   const image = product.images.edges[0]?.node;
   const price = product.priceRange.minVariantPrice;
+  const variant = product.variants.edges[0]?.node;
+  const addItem = useCartStore((s) => s.addItem);
+  const [adding, setAdding] = useState(false);
+
+  const handleAdd = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!variant) return;
+    setAdding(true);
+    try {
+      await addItem({
+        variantId: variant.id,
+        productHandle: product.handle,
+        productTitle: product.title,
+        variantTitle: variant.title,
+        image: image?.url ?? null,
+        price: variant.price,
+        quantity: 1,
+      });
+      toast.success(`${product.title} added to cart`);
+    } finally {
+      setAdding(false);
+    }
+  };
 
   return (
-    <div className="product-card group block rounded-3xl bg-card border border-border overflow-hidden shadow-soft">
+    <Link
+      to="/product/$handle"
+      params={{ handle: product.handle }}
+      className="product-card group block rounded-3xl bg-card border border-border overflow-hidden shadow-soft"
+    >
       <div className="relative aspect-square surface overflow-hidden">
         <div className="absolute inset-0 bg-[image:var(--gradient-hero)] opacity-60" />
-        {image && (
+        {image ? (
           <img
             src={image.url}
             alt={image.altText ?? product.title}
             loading="lazy"
             className="relative h-full w-full object-contain p-5 sm:p-8 transition-transform duration-700 group-hover:scale-110"
           />
+        ) : (
+          <div className="relative h-full w-full grid place-items-center text-muted-foreground text-xs">
+            No image
+          </div>
         )}
       </div>
       <div className="p-4 sm:p-6">
@@ -34,13 +70,15 @@ export function ShopifyProductCard({ product }: { product: ShopifyProduct }) {
             </span>
           </div>
           <button
-            className="shrink-0 size-9 sm:size-10 grid place-items-center rounded-full bg-foreground text-background transition-all duration-300 sm:opacity-0 sm:translate-y-2 sm:group-hover:opacity-100 sm:group-hover:translate-y-0"
+            onClick={handleAdd}
+            disabled={adding || !variant}
+            className="shrink-0 size-9 sm:size-10 grid place-items-center rounded-full bg-foreground text-background transition-all duration-300 disabled:opacity-50"
             aria-label="Add to cart"
           >
-            <ShoppingBag className="size-4" />
+            {adding ? <Loader2 className="size-4 animate-spin" /> : <ShoppingBag className="size-4" />}
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
