@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Twitter, Youtube, Github } from "lucide-react";
+import { Instagram } from "lucide-react";
 
 export function Footer() {
   return (
@@ -11,21 +11,19 @@ export function Footer() {
             Blue Apple
           </Link>
           <p className="mt-4 text-sm text-muted-foreground max-w-xs">
-            Smart Tech. Minimal Design. Premium devices crafted for the way you live.
+            Sudan's trusted source for genuine iPhones. Imported, verified, and delivered since 2021.
           </p>
           <div className="flex gap-2 mt-6">
-            {[Instagram, Twitter, Youtube, Github].map((Icon, i) => (
-              <a key={i} href="#" className="size-9 grid place-items-center rounded-full bg-muted hover:bg-primary hover:text-primary-foreground transition-colors">
-                <Icon className="size-4" />
-              </a>
-            ))}
+            <a href="#" className="size-9 grid place-items-center rounded-full bg-muted hover:bg-primary hover:text-primary-foreground transition-colors">
+              <Instagram className="size-4" />
+            </a>
           </div>
         </div>
 
         {[
-          { title: "Shop", links: ["Phones", "Earbuds", "Watches", "Chargers", "Cases"] },
-          { title: "Company", links: ["About", "Press", "Careers", "Sustainability"] },
-          { title: "Support", links: ["Contact", "Returns", "Warranty", "Track Order"] },
+          { title: "Shop", links: ["iPhones", "Accessories"] },
+          { title: "Company", links: ["About", "Contact"] },
+          { title: "Support", links: ["Returns", "Warranty", "Track Order"] },
         ].map((col) => (
           <div key={col.title}>
             <h4 className="text-sm font-semibold mb-4">{col.title}</h4>
@@ -41,8 +39,8 @@ export function Footer() {
       </div>
       <div className="border-t border-border">
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-5 sm:py-6 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-foreground gap-2 text-center sm:text-left">
-          <p>© {new Date().getFullYear()} Blue Apple Inc. All rights reserved.</p>
-          <p>Designed in California. Built for the world.</p>
+          <p>© {new Date().getFullYear()} Blue Apple. All rights reserved.</p>
+          <p>Imported to Sudan. Trusted since 2021.</p>
         </div>
       </div>
     </footer>

@@ -7,6 +7,8 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { Toaster } from "sonner";
+import { useCartSync } from "@/hooks/useCartSync";
 
 import appCss from "../styles.css?url";
 
@@ -72,16 +74,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Blue Apple — Smart Tech. Minimal Design." },
-      { name: "description", content: "Premium smartphones, earbuds, smartwatches and accessories crafted with minimalist design." },
+      { title: "Blue Apple — Genuine iPhones in Sudan" },
+      { name: "description", content: "Sudan's trusted source for genuine iPhones. Imported, verified, and delivered since 2021." },
       { name: "author", content: "Blue Apple" },
-      { property: "og:title", content: "Blue Apple — Smart Tech. Minimal Design." },
-      { property: "og:description", content: "Premium smartphones, earbuds, smartwatches and accessories crafted with minimalist design." },
+      { property: "og:title", content: "Blue Apple — Genuine iPhones in Sudan" },
+      { property: "og:description", content: "Sudan's trusted source for genuine iPhones. Imported, verified, and delivered since 2021." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@blueapple" },
-      { name: "twitter:title", content: "Blue Apple — Smart Tech. Minimal Design." },
-      { name: "twitter:description", content: "Premium smartphones, earbuds, smartwatches and accessories crafted with minimalist design." },
+      { name: "twitter:title", content: "Blue Apple — Genuine iPhones in Sudan" },
+      { name: "twitter:description", content: "Sudan's trusted source for genuine iPhones. Imported, verified, and delivered since 2021." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/58d39879-4001-4786-b737-2273427f22f1/id-preview-e43421c8--0ddf9982-8e9a-416a-80e0-59e940973750.lovable.app-1778439457673.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/58d39879-4001-4786-b737-2273427f22f1/id-preview-e43421c8--0ddf9982-8e9a-416a-80e0-59e940973750.lovable.app-1778439457673.png" },
     ],
@@ -117,10 +119,12 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useCartSync();
 
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );
 }
