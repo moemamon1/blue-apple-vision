@@ -1,12 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useState } from "react";
-import { Star, Minus, Plus, ShoppingBag, Heart, Truck, Shield, RotateCw, Loader2 } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Heart, Truck, Shield, RotateCw, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { PageShell } from "@/components/PageShell";
-import { fetchProductByHandle, type ShopifyProduct } from "@/lib/shopify";
+import { fetchProductByHandle, fetchProducts } from "@/lib/shopify";
 import { ShopifyProductCard } from "@/components/ShopifyProductCard";
 import { useCartStore } from "@/stores/cartStore";
-import { fetchProducts } from "@/lib/shopify";
 
 export const Route = createFileRoute("/product/$handle")({
   loader: async ({ params }) => {
@@ -34,7 +33,7 @@ export const Route = createFileRoute("/product/$handle")({
       </div>
     </PageShell>
   ),
-  errorComponent: ({ error }) => (
+  errorComponent: ({ error }: { error: Error }) => (
     <PageShell>
       <div className="mx-auto max-w-xl px-6 py-32 text-center">
         <p className="text-muted-foreground">{error.message}</p>
@@ -93,7 +92,7 @@ function ProductDetailPage() {
             </div>
             {images.length > 1 && (
               <div className="mt-3 sm:mt-4 grid grid-cols-4 gap-2 sm:gap-3">
-                {images.map((img, i) => (
+                {images.map((img: { url: string }, i: number) => (
                   <button
                     key={i}
                     onClick={() => setActiveImage(img.url)}
@@ -126,15 +125,16 @@ function ProductDetailPage() {
             {/* Variants */}
             {product.options && product.options.length > 0 && (
               <div className="mt-6 sm:mt-8 space-y-4">
-                {product.options.map((opt) => (
+                {product.options.map((opt: { name: string; values: string[] }) => (
                   <div key={opt.name}>
                     <p className="text-sm font-medium mb-2">{opt.name}</p>
                     <div className="flex flex-wrap gap-2">
-                      {opt.values.map((val) => {
-                        const isActive = selectedVariant?.selectedOptions?.some((o) => o.name === opt.name && o.value === val);
-                        // Find variant with this option value
-                        const variantForValue = product.variants.edges.find((v) =>
-                          v.node.selectedOptions?.some((o) => o.name === opt.name && o.value === val)
+                      {opt.values.map((val: string) => {
+                        const isActive = selectedVariant?.selectedOptions?.some(
+                          (o: { name: string; value: string }) => o.name === opt.name && o.value === val
+                        );
+                        const variantForValue = product.variants.edges.find((v: { node: { selectedOptions?: Array<{ name: string; value: string }> } }) =>
+                          v.node.selectedOptions?.some((o: { name: string; value: string }) => o.name === opt.name && o.value === val)
                         );
                         return (
                           <button
@@ -207,3 +207,4 @@ function ProductDetailPage() {
     </PageShell>
   );
 }
+
