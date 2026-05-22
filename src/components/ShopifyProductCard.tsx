@@ -39,8 +39,8 @@ export function ShopifyProductCard({ product }: { product: ShopifyProduct }) {
       params={{ handle: product.handle }}
       className="product-card group block rounded-3xl bg-card border border-border overflow-hidden shadow-soft"
     >
-      <div className="relative aspect-square surface overflow-hidden">
-        <div className="absolute inset-0 bg-[image:var(--gradient-hero)] opacity-60" />
+      <div className="relative aspect-square bg-white overflow-hidden">
+
         {image ? (
           <img
             src={image.url}
