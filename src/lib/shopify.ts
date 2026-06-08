@@ -67,6 +67,32 @@ const PRODUCT_BY_HANDLE_QUERY = `
   }
 `;
 
+const COLLECTION_PRODUCTS_QUERY = `
+  query GetCollectionProducts($id: ID!, $first: Int!) {
+    collection(id: $id) {
+      id
+      title
+      products(first: $first) {
+        edges { node { ${PRODUCT_FIELDS} } }
+      }
+    }
+  }
+`;
+
+export async function fetchProductsByCollectionId(
+  collectionId: string,
+  first = 250
+): Promise<ShopifyProduct[]> {
+  const gid = collectionId.startsWith("gid://")
+    ? collectionId
+    : `gid://shopify/Collection/${collectionId}`;
+  const result = await storefrontApiRequest<{
+    collection: { products: { edges: Array<{ node: ShopifyProduct }> } } | null;
+  }>(COLLECTION_PRODUCTS_QUERY, { id: gid, first });
+  if (!result?.data?.collection) return [];
+  return result.data.collection.products.edges.map((e) => e.node);
+}
+
 export async function storefrontApiRequest<T = any>(
   query: string,
   variables: Record<string, unknown> = {}

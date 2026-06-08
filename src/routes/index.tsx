@@ -2,7 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PageShell } from "@/components/PageShell";
 import { ShopifyProductCard } from "@/components/ShopifyProductCard";
-import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
+import { fetchProductsByCollectionId, type ShopifyProduct } from "@/lib/shopify";
+
+const COLLECTION_IDS = [
+  "323128656068", // iPhone 17 Series
+  "322645590212", // iPhone 16 Series
+  "323128623300", // iPhone 13 Series
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -63,10 +69,19 @@ function PhonesPage() {
 
     async function loadProducts() {
       try {
-        const products = await fetchProducts(
-          "vendor:Apple AND product_type:Smartphones",
-          50
+        const results = await Promise.all(
+          COLLECTION_IDS.map((id) => fetchProductsByCollectionId(id, 250))
         );
+        const seen = new Set<string>();
+        const products: ShopifyProduct[] = [];
+        for (const list of results) {
+          for (const p of list) {
+            if (!seen.has(p.id)) {
+              seen.add(p.id);
+              products.push(p);
+            }
+          }
+        }
 
         if (cancelled) return;
 
