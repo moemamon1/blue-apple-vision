@@ -69,10 +69,19 @@ function PhonesPage() {
 
     async function loadProducts() {
       try {
-        const products = await fetchProducts(
-          "vendor:Apple AND product_type:Smartphones",
-          50
+        const results = await Promise.all(
+          COLLECTION_IDS.map((id) => fetchProductsByCollectionId(id, 250))
         );
+        const seen = new Set<string>();
+        const products: ShopifyProduct[] = [];
+        for (const list of results) {
+          for (const p of list) {
+            if (!seen.has(p.id)) {
+              seen.add(p.id);
+              products.push(p);
+            }
+          }
+        }
 
         if (cancelled) return;
 
