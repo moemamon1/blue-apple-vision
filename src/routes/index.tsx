@@ -2,7 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PageShell } from "@/components/PageShell";
 import { ShopifyProductCard } from "@/components/ShopifyProductCard";
-import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
+import { fetchProductsByCollectionId, type ShopifyProduct } from "@/lib/shopify";
+
+const COLLECTION_IDS = [
+  "323128656068", // iPhone 17 Series
+  "322645590212", // iPhone 16 Series
+  "323128623300", // iPhone 13 Series
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
