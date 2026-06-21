@@ -88,6 +88,38 @@ function colorForName(name: string): string {
   return "#cccccc";
 }
 
+type DescBlock =
+  | { type: "p"; text: string }
+  | { type: "ul"; items: string[] };
+
+function parseDescription(raw: string): DescBlock[] {
+  const lines = raw
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l.length > 0);
+
+  const blocks: DescBlock[] = [];
+  let currentList: string[] | null = null;
+
+  const isBullet = (l: string) => /^([-*•·●◦▪►–]|\d+[.)])\s+/.test(l);
+  const stripBullet = (l: string) => l.replace(/^([-*•·●◦▪►–]|\d+[.)])\s+/, "").trim();
+
+  for (const line of lines) {
+    if (isBullet(line)) {
+      if (!currentList) {
+        currentList = [];
+        blocks.push({ type: "ul", items: currentList });
+      }
+      currentList.push(stripBullet(line));
+    } else {
+      currentList = null;
+      blocks.push({ type: "p", text: line });
+    }
+  }
+  return blocks;
+}
+
 function ProductDetailPage() {
   const { product, related } = Route.useLoaderData();
   const [qty, setQty] = useState(1);
@@ -156,7 +188,6 @@ function ProductDetailPage() {
           <div>
             <p className="text-xs sm:text-sm uppercase tracking-widest text-primary">{product.productType || "Smartphones"}</p>
             <h1 className="mt-2 text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight">{product.title}</h1>
-            <p className="mt-2 sm:mt-3 text-base sm:text-lg text-muted-foreground">{product.description.slice(0, 140)}{product.description.length > 140 ? "..." : ""}</p>
 
             <div className="mt-6 sm:mt-8 flex items-baseline gap-3">
               <span className="text-3xl sm:text-4xl font-semibold">
@@ -165,7 +196,26 @@ function ProductDetailPage() {
               </span>
             </div>
 
-            <p className="mt-5 sm:mt-6 text-sm sm:text-base text-foreground/80 leading-relaxed">{product.description}</p>
+            {product.description?.trim() && (
+              <div className="mt-6 sm:mt-8 rounded-2xl border border-border bg-muted/30 p-5 sm:p-6">
+                <h2 className="text-sm font-semibold uppercase tracking-widest text-primary">
+                  Overview
+                </h2>
+                <div className="mt-3 space-y-3 text-sm sm:text-base text-foreground/85 leading-relaxed">
+                  {parseDescription(product.description).map((block, i) =>
+                    block.type === "p" ? (
+                      <p key={i}>{block.text}</p>
+                    ) : (
+                      <ul key={i} className="list-disc pl-5 space-y-1.5 marker:text-primary">
+                        {block.items.map((item, j) => (
+                          <li key={j}>{item}</li>
+                        ))}
+                      </ul>
+                    )
+                  )}
+                </div>
+              </div>
+            )}
 
             {/* Variants */}
             {product.options && product.options.length > 0 && (
