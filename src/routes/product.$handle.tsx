@@ -43,6 +43,51 @@ export const Route = createFileRoute("/product/$handle")({
   component: ProductDetailPage,
 });
 
+const COLOR_MAP: Record<string, string> = {
+  black: "#1d1d1f",
+  "space black": "#1d1d1f",
+  "space gray": "#52555a",
+  "space grey": "#52555a",
+  graphite: "#3a3a3c",
+  midnight: "#171e27",
+  "midnight black": "#171e27",
+  white: "#f5f5f7",
+  starlight: "#f0ead6",
+  silver: "#e3e4e5",
+  gold: "#f4e1c1",
+  "rose gold": "#f5cac3",
+  pink: "#f7c6c7",
+  red: "#bf0013",
+  "product red": "#bf0013",
+  blue: "#3b6ea5",
+  "sierra blue": "#a7c1d9",
+  "pacific blue": "#2e4a62",
+  "deep blue": "#2c3e5d",
+  green: "#54625a",
+  "alpine green": "#5b6a5a",
+  yellow: "#f5e07a",
+  purple: "#b5a7d6",
+  "deep purple": "#56506b",
+  "natural titanium": "#bcb8b1",
+  "blue titanium": "#5f7588",
+  "white titanium": "#e9e5dd",
+  "black titanium": "#3b3b3d",
+  "desert titanium": "#bda37a",
+  titanium: "#bcb8b1",
+  orange: "#e9863b",
+  teal: "#3aa6a0",
+};
+
+function colorForName(name: string): string {
+  const key = name.trim().toLowerCase();
+  if (COLOR_MAP[key]) return COLOR_MAP[key];
+  // try partial match
+  for (const k of Object.keys(COLOR_MAP)) {
+    if (key.includes(k)) return COLOR_MAP[k];
+  }
+  return "#cccccc";
+}
+
 function ProductDetailPage() {
   const { product, related } = Route.useLoaderData();
   const [qty, setQty] = useState(1);
@@ -125,34 +170,60 @@ function ProductDetailPage() {
             {/* Variants */}
             {product.options && product.options.length > 0 && (
               <div className="mt-6 sm:mt-8 space-y-4">
-                {product.options.map((opt: { name: string; values: string[] }) => (
-                  <div key={opt.name}>
-                    <p className="text-sm font-medium mb-2">{opt.name}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {opt.values.map((val: string) => {
-                        const isActive = selectedVariant?.selectedOptions?.some(
-                          (o: { name: string; value: string }) => o.name === opt.name && o.value === val
-                        );
-                        const variantForValue = product.variants.edges.find((v: { node: { selectedOptions?: Array<{ name: string; value: string }> } }) =>
-                          v.node.selectedOptions?.some((o: { name: string; value: string }) => o.name === opt.name && o.value === val)
-                        );
-                        return (
-                          <button
-                            key={val}
-                            onClick={() => variantForValue && setSelectedVariant(variantForValue.node)}
-                            className={`px-4 py-2 rounded-full border text-sm font-medium transition ${
-                              isActive
-                                ? "border-primary bg-primary/10 text-primary"
-                                : "border-border hover:bg-muted"
-                            }`}
-                          >
-                            {val}
-                          </button>
-                        );
-                      })}
+                {product.options.map((opt: { name: string; values: string[] }) => {
+                  const isColor = /colou?r/i.test(opt.name);
+                  return (
+                    <div key={opt.name}>
+                      <p className="text-sm font-medium mb-2">
+                        {opt.name}
+                        {isColor && (
+                          <span className="ml-2 text-muted-foreground font-normal">
+                            {selectedVariant?.selectedOptions?.find(
+                              (o: { name: string; value: string }) => o.name === opt.name
+                            )?.value}
+                          </span>
+                        )}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {opt.values.map((val: string) => {
+                          const isActive = selectedVariant?.selectedOptions?.some(
+                            (o: { name: string; value: string }) => o.name === opt.name && o.value === val
+                          );
+                          const variantForValue = product.variants.edges.find((v: { node: { selectedOptions?: Array<{ name: string; value: string }> } }) =>
+                            v.node.selectedOptions?.some((o: { name: string; value: string }) => o.name === opt.name && o.value === val)
+                          );
+                          if (isColor) {
+                            return (
+                              <button
+                                key={val}
+                                title={val}
+                                aria-label={val}
+                                onClick={() => variantForValue && setSelectedVariant(variantForValue.node)}
+                                className={`size-9 rounded-full border-2 transition shadow-sm ${
+                                  isActive ? "border-primary ring-2 ring-primary/30" : "border-border hover:border-foreground/40"
+                                }`}
+                                style={{ background: colorForName(val) }}
+                              />
+                            );
+                          }
+                          return (
+                            <button
+                              key={val}
+                              onClick={() => variantForValue && setSelectedVariant(variantForValue.node)}
+                              className={`px-4 py-2 rounded-full border text-sm font-medium transition ${
+                                isActive
+                                  ? "border-primary bg-primary/10 text-primary"
+                                  : "border-border hover:bg-muted"
+                              }`}
+                            >
+                              {val}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
 
