@@ -85,11 +85,7 @@ function PhonesPage() {
 
         if (cancelled) return;
 
-        const sorted = [...products].sort(
-          (a, b) => rank(a.title) - rank(b.title)
-        );
-
-        setPhones(sorted);
+        setPhones(products);
       } catch (err: any) {
         console.error(err);
 
