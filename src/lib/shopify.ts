@@ -72,7 +72,7 @@ const COLLECTION_PRODUCTS_QUERY = `
     collection(id: $id) {
       id
       title
-      products(first: $first) {
+      products(first: $first, sortKey: MANUAL, reverse: false) {
         edges { node { ${PRODUCT_FIELDS} } }
       }
     }
