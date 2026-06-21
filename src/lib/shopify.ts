@@ -93,6 +93,55 @@ export async function fetchProductsByCollectionId(
   return result.data.collection.products.edges.map((e) => e.node);
 }
 
+const ALL_COLLECTIONS_QUERY = `
+  query GetAllCollections($first: Int!, $productsFirst: Int!) {
+    collections(first: $first, sortKey: TITLE) {
+      edges {
+        node {
+          id
+          title
+          handle
+          products(first: $productsFirst, sortKey: MANUAL, reverse: false) {
+            edges { node { ${PRODUCT_FIELDS} } }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export interface ShopifyCollection {
+  id: string;
+  title: string;
+  handle: string;
+  products: ShopifyProduct[];
+}
+
+export async function fetchAllCollectionsWithProducts(
+  first = 50,
+  productsFirst = 250
+): Promise<ShopifyCollection[]> {
+  const result = await storefrontApiRequest<{
+    collections: {
+      edges: Array<{
+        node: {
+          id: string;
+          title: string;
+          handle: string;
+          products: { edges: Array<{ node: ShopifyProduct }> };
+        };
+      }>;
+    };
+  }>(ALL_COLLECTIONS_QUERY, { first, productsFirst });
+  if (!result?.data?.collections) return [];
+  return result.data.collections.edges.map((e) => ({
+    id: e.node.id,
+    title: e.node.title,
+    handle: e.node.handle,
+    products: e.node.products.edges.map((p) => p.node),
+  }));
+}
+
 export async function storefrontApiRequest<T = any>(
   query: string,
   variables: Record<string, unknown> = {}

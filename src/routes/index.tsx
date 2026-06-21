@@ -2,13 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PageShell } from "@/components/PageShell";
 import { ShopifyProductCard } from "@/components/ShopifyProductCard";
-import { fetchProductsByCollectionId, type ShopifyProduct } from "@/lib/shopify";
-
-const COLLECTION_IDS = [
-  "323128656068", // iPhone 17 Series
-  "322645590212", // iPhone 16 Series
-  "323128623300", // iPhone 13 Series
-];
+import {
+  fetchAllCollectionsWithProducts,
+  type ShopifyCollection,
+  type ShopifyProduct,
+} from "@/lib/shopify";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -34,33 +32,16 @@ export const Route = createFileRoute("/")({
   component: PhonesPage,
 });
 
-const MODEL_ORDER = [
-  "iPhone 17 Pro Max",
-  "iPhone 17 Pro",
-  "iPhone 17 Plus",
-  "iPhone 17",
-  "iPhone 16 Pro Max",
-  "iPhone 16 Pro",
-  "iPhone 16 Plus",
-  "iPhone 16",
-  "iPhone 15 Pro Max",
-  "iPhone 15 Pro",
-  "iPhone 15 Plus",
-  "iPhone 15",
-  "iPhone 14 Pro Max",
-  "iPhone 14 Pro",
-  "iPhone 14 Plus",
-  "iPhone 14",
-  "iPhone 13 Pro Max",
-];
-
-function rank(title: string) {
-  const idx = MODEL_ORDER.indexOf(title);
-  return idx === -1 ? 999 : idx;
+// Sort collections so newest iPhone series appear first, SE/Budget last.
+function collectionRank(title: string): number {
+  const m = title.match(/iPhone\s+(\d+)/i);
+  if (m) return 1000 - parseInt(m[1], 10); // higher number = earlier
+  if (/SE|Budget/i.test(title)) return 9999;
+  return 5000;
 }
 
 function PhonesPage() {
-  const [phones, setPhones] = useState<ShopifyProduct[]>([]);
+  const [collections, setCollections] = useState<ShopifyCollection[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -69,42 +50,51 @@ function PhonesPage() {
 
     async function loadProducts() {
       try {
-        const results = await Promise.all(
-          COLLECTION_IDS.map((id) => fetchProductsByCollectionId(id, 250))
-        );
-        const seen = new Set<string>();
-        const products: ShopifyProduct[] = [];
-        for (const list of results) {
-          for (const p of list) {
-            if (!seen.has(p.id)) {
-              seen.add(p.id);
-              products.push(p);
-            }
-          }
-        }
-
+        const all = await fetchAllCollectionsWithProducts(50, 250);
         if (cancelled) return;
 
-        setPhones(products);
+        // Keep only iPhone-related collections; sort by series.
+        const iphoneCollections = all
+          .filter(
+            (c) =>
+              /iphone/i.test(c.title) ||
+              /se|budget/i.test(c.title)
+          )
+          .filter((c) => c.products.length > 0)
+          .sort((a, b) => collectionRank(a.title) - collectionRank(b.title));
+
+        setCollections(iphoneCollections);
       } catch (err: any) {
         console.error(err);
-
         if (!cancelled) {
           setError(err.message || "Failed to load products");
         }
       } finally {
-        if (!cancelled) {
-          setLoading(false);
-        }
+        if (!cancelled) setLoading(false);
       }
     }
 
     loadProducts();
-
     return () => {
       cancelled = true;
     };
   }, []);
+
+  const allProducts: ShopifyProduct[] = (() => {
+    const seen = new Set<string>();
+    const list: ShopifyProduct[] = [];
+    for (const c of collections) {
+      for (const p of c.products) {
+        if (!seen.has(p.id)) {
+          seen.add(p.id);
+          list.push(p);
+        }
+      }
+    }
+    return list;
+  })();
+
+
 
   return (
     <PageShell>
@@ -140,15 +130,15 @@ function PhonesPage() {
           </p>
         )}
 
-        {!loading && !error && phones.length === 0 && (
+        {!loading && !error && allProducts.length === 0 && (
           <p className="text-muted-foreground">
             No products found.
           </p>
         )}
 
-        {!loading && !error && phones.length > 0 && (
+        {!loading && !error && allProducts.length > 0 && (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {phones.map((phone) => (
+            {allProducts.map((phone) => (
               <ShopifyProductCard
                 key={phone.id}
                 product={phone}
