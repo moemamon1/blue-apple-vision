@@ -88,6 +88,38 @@ function colorForName(name: string): string {
   return "#cccccc";
 }
 
+type DescBlock =
+  | { type: "p"; text: string }
+  | { type: "ul"; items: string[] };
+
+function parseDescription(raw: string): DescBlock[] {
+  const lines = raw
+    .replace(/\r\n/g, "\n")
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => l.length > 0);
+
+  const blocks: DescBlock[] = [];
+  let currentList: string[] | null = null;
+
+  const isBullet = (l: string) => /^([-*•·●◦▪►–]|\d+[.)])\s+/.test(l);
+  const stripBullet = (l: string) => l.replace(/^([-*•·●◦▪►–]|\d+[.)])\s+/, "").trim();
+
+  for (const line of lines) {
+    if (isBullet(line)) {
+      if (!currentList) {
+        currentList = [];
+        blocks.push({ type: "ul", items: currentList });
+      }
+      currentList.push(stripBullet(line));
+    } else {
+      currentList = null;
+      blocks.push({ type: "p", text: line });
+    }
+  }
+  return blocks;
+}
+
 function ProductDetailPage() {
   const { product, related } = Route.useLoaderData();
   const [qty, setQty] = useState(1);
