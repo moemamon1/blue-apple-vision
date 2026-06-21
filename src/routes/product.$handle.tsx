@@ -43,6 +43,51 @@ export const Route = createFileRoute("/product/$handle")({
   component: ProductDetailPage,
 });
 
+const COLOR_MAP: Record<string, string> = {
+  black: "#1d1d1f",
+  "space black": "#1d1d1f",
+  "space gray": "#52555a",
+  "space grey": "#52555a",
+  graphite: "#3a3a3c",
+  midnight: "#171e27",
+  "midnight black": "#171e27",
+  white: "#f5f5f7",
+  starlight: "#f0ead6",
+  silver: "#e3e4e5",
+  gold: "#f4e1c1",
+  "rose gold": "#f5cac3",
+  pink: "#f7c6c7",
+  red: "#bf0013",
+  "product red": "#bf0013",
+  blue: "#3b6ea5",
+  "sierra blue": "#a7c1d9",
+  "pacific blue": "#2e4a62",
+  "deep blue": "#2c3e5d",
+  green: "#54625a",
+  "alpine green": "#5b6a5a",
+  yellow: "#f5e07a",
+  purple: "#b5a7d6",
+  "deep purple": "#56506b",
+  "natural titanium": "#bcb8b1",
+  "blue titanium": "#5f7588",
+  "white titanium": "#e9e5dd",
+  "black titanium": "#3b3b3d",
+  "desert titanium": "#bda37a",
+  titanium: "#bcb8b1",
+  orange: "#e9863b",
+  teal: "#3aa6a0",
+};
+
+function colorForName(name: string): string {
+  const key = name.trim().toLowerCase();
+  if (COLOR_MAP[key]) return COLOR_MAP[key];
+  // try partial match
+  for (const k of Object.keys(COLOR_MAP)) {
+    if (key.includes(k)) return COLOR_MAP[k];
+  }
+  return "#cccccc";
+}
+
 function ProductDetailPage() {
   const { product, related } = Route.useLoaderData();
   const [qty, setQty] = useState(1);
