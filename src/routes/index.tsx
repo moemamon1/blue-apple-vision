@@ -130,15 +130,15 @@ function PhonesPage() {
           </p>
         )}
 
-        {!loading && !error && phones.length === 0 && (
+        {!loading && !error && allProducts.length === 0 && (
           <p className="text-muted-foreground">
             No products found.
           </p>
         )}
 
-        {!loading && !error && phones.length > 0 && (
+        {!loading && !error && allProducts.length > 0 && (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {phones.map((phone) => (
+            {allProducts.map((phone) => (
               <ShopifyProductCard
                 key={phone.id}
                 product={phone}
