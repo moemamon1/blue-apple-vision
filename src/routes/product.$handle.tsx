@@ -125,34 +125,60 @@ function ProductDetailPage() {
             {/* Variants */}
             {product.options && product.options.length > 0 && (
               <div className="mt-6 sm:mt-8 space-y-4">
-                {product.options.map((opt: { name: string; values: string[] }) => (
-                  <div key={opt.name}>
-                    <p className="text-sm font-medium mb-2">{opt.name}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {opt.values.map((val: string) => {
-                        const isActive = selectedVariant?.selectedOptions?.some(
-                          (o: { name: string; value: string }) => o.name === opt.name && o.value === val
-                        );
-                        const variantForValue = product.variants.edges.find((v: { node: { selectedOptions?: Array<{ name: string; value: string }> } }) =>
-                          v.node.selectedOptions?.some((o: { name: string; value: string }) => o.name === opt.name && o.value === val)
-                        );
-                        return (
-                          <button
-                            key={val}
-                            onClick={() => variantForValue && setSelectedVariant(variantForValue.node)}
-                            className={`px-4 py-2 rounded-full border text-sm font-medium transition ${
-                              isActive
-                                ? "border-primary bg-primary/10 text-primary"
-                                : "border-border hover:bg-muted"
-                            }`}
-                          >
-                            {val}
-                          </button>
-                        );
-                      })}
+                {product.options.map((opt: { name: string; values: string[] }) => {
+                  const isColor = /colou?r/i.test(opt.name);
+                  return (
+                    <div key={opt.name}>
+                      <p className="text-sm font-medium mb-2">
+                        {opt.name}
+                        {isColor && (
+                          <span className="ml-2 text-muted-foreground font-normal">
+                            {selectedVariant?.selectedOptions?.find(
+                              (o: { name: string; value: string }) => o.name === opt.name
+                            )?.value}
+                          </span>
+                        )}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {opt.values.map((val: string) => {
+                          const isActive = selectedVariant?.selectedOptions?.some(
+                            (o: { name: string; value: string }) => o.name === opt.name && o.value === val
+                          );
+                          const variantForValue = product.variants.edges.find((v: { node: { selectedOptions?: Array<{ name: string; value: string }> } }) =>
+                            v.node.selectedOptions?.some((o: { name: string; value: string }) => o.name === opt.name && o.value === val)
+                          );
+                          if (isColor) {
+                            return (
+                              <button
+                                key={val}
+                                title={val}
+                                aria-label={val}
+                                onClick={() => variantForValue && setSelectedVariant(variantForValue.node)}
+                                className={`size-9 rounded-full border-2 transition shadow-sm ${
+                                  isActive ? "border-primary ring-2 ring-primary/30" : "border-border hover:border-foreground/40"
+                                }`}
+                                style={{ background: colorForName(val) }}
+                              />
+                            );
+                          }
+                          return (
+                            <button
+                              key={val}
+                              onClick={() => variantForValue && setSelectedVariant(variantForValue.node)}
+                              className={`px-4 py-2 rounded-full border text-sm font-medium transition ${
+                                isActive
+                                  ? "border-primary bg-primary/10 text-primary"
+                                  : "border-border hover:bg-muted"
+                              }`}
+                            >
+                              {val}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
 
