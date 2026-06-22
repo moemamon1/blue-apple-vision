@@ -222,36 +222,59 @@ function ProductDetailPage() {
               <div className="mt-6 sm:mt-8 space-y-4">
                 {product.options.map((opt: { name: string; values: string[] }) => {
                   const isColor = /colou?r/i.test(opt.name);
+                  const currentSelections: Record<string, string> = {};
+                  selectedVariant?.selectedOptions?.forEach((o: { name: string; value: string }) => {
+                    currentSelections[o.name] = o.value;
+                  });
+
+                  // Pick the variant that best matches: must have opt.name === val,
+                  // and match as many other current selections as possible.
+                  const pickVariantFor = (val: string) => {
+                    const desired = { ...currentSelections, [opt.name]: val };
+                    let best: { node: typeof selectedVariant } | null = null;
+                    let bestScore = -1;
+                    for (const edge of product.variants.edges as Array<{ node: { selectedOptions?: Array<{ name: string; value: string }> } }>) {
+                      const so = edge.node.selectedOptions ?? [];
+                      const hasVal = so.some((o) => o.name === opt.name && o.value === val);
+                      if (!hasVal) continue;
+                      let score = 0;
+                      for (const o of so) {
+                        if (desired[o.name] === o.value) score++;
+                      }
+                      if (score > bestScore) {
+                        bestScore = score;
+                        best = edge as { node: typeof selectedVariant };
+                      }
+                    }
+                    return best;
+                  };
+
                   return (
                     <div key={opt.name}>
                       <p className="text-sm font-medium mb-2">
                         {opt.name}
                         {isColor && (
                           <span className="ml-2 text-muted-foreground font-normal">
-                            {selectedVariant?.selectedOptions?.find(
-                              (o: { name: string; value: string }) => o.name === opt.name
-                            )?.value}
+                            {currentSelections[opt.name]}
                           </span>
                         )}
                       </p>
                       <div className="flex flex-wrap gap-2">
                         {opt.values.map((val: string) => {
-                          const isActive = selectedVariant?.selectedOptions?.some(
-                            (o: { name: string; value: string }) => o.name === opt.name && o.value === val
-                          );
-                          const variantForValue = product.variants.edges.find((v: { node: { selectedOptions?: Array<{ name: string; value: string }> } }) =>
-                            v.node.selectedOptions?.some((o: { name: string; value: string }) => o.name === opt.name && o.value === val)
-                          );
+                          const isActive = currentSelections[opt.name] === val;
+                          const variantForValue = pickVariantFor(val);
+                          const disabled = !variantForValue;
                           if (isColor) {
                             return (
                               <button
                                 key={val}
                                 title={val}
                                 aria-label={val}
+                                disabled={disabled}
                                 onClick={() => variantForValue && setSelectedVariant(variantForValue.node)}
                                 className={`size-9 rounded-full border-2 transition shadow-sm ${
                                   isActive ? "border-primary ring-2 ring-primary/30" : "border-border hover:border-foreground/40"
-                                }`}
+                                } ${disabled ? "opacity-40 cursor-not-allowed" : ""}`}
                                 style={{ background: colorForName(val) }}
                               />
                             );
@@ -259,12 +282,13 @@ function ProductDetailPage() {
                           return (
                             <button
                               key={val}
+                              disabled={disabled}
                               onClick={() => variantForValue && setSelectedVariant(variantForValue.node)}
                               className={`px-4 py-2 rounded-full border text-sm font-medium transition ${
                                 isActive
                                   ? "border-primary bg-primary/10 text-primary"
                                   : "border-border hover:bg-muted"
-                              }`}
+                              } ${disabled ? "opacity-40 cursor-not-allowed line-through" : ""}`}
                             >
                               {val}
                             </button>
