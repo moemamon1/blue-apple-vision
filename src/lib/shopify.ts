@@ -39,7 +39,7 @@ const PRODUCT_FIELDS = `
   tags
   priceRange { minVariantPrice { amount currencyCode } }
   images(first: 6) { edges { node { url altText } } }
-  variants(first: 10) {
+  variants(first: 250) {
     edges {
       node {
         id
