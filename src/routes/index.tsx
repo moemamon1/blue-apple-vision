@@ -98,7 +98,7 @@ function PhonesPage() {
 
   return (
     <PageShell>
-      <section className="relative mx-auto max-w-7xl px-6 lg:px-10 py-16 lg:py-24 hero-bg overflow-hidden">
+      <section className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-10 sm:py-16 lg:py-24 hero-bg overflow-hidden">
         {/* Animated background blobs */}
         <div
           className="hero-blob"
@@ -125,18 +125,18 @@ function PhonesPage() {
         />
 
         <div className="relative">
-          <p className="text-sm uppercase tracking-widest text-primary animate-fade-up stagger-1">
+          <p className="text-[11px] sm:text-sm uppercase tracking-widest text-primary animate-fade-up stagger-1">
             Trusted Service Since 2021
           </p>
 
-          <h1 className="mt-3 text-5xl lg:text-6xl font-semibold tracking-tight animate-fade-up stagger-2">
+          <h1 className="mt-3 text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] animate-fade-up stagger-2">
             Premium Phones.{" "}
             <span className="gradient-text-animated">
               Trusted Service Since 2021.
             </span>
           </h1>
 
-          <div className="mt-6 max-w-2xl space-y-4 text-lg text-muted-foreground">
+          <div className="mt-5 sm:mt-6 max-w-2xl space-y-3 sm:space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
             <p className="animate-fade-up stagger-3">
               Blue Apple specializes in smartphones and accessories, offering genuine products, fast delivery, and a 1-year warranty.
             </p>
@@ -150,9 +150,10 @@ function PhonesPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 pb-20">
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 pb-16 sm:pb-20">
+
         {loading && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
@@ -175,7 +176,7 @@ function PhonesPage() {
         )}
 
         {!loading && !error && allProducts.length > 0 && (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {allProducts.map((phone, idx) => (
               <div
                 key={phone.id}
@@ -186,6 +187,7 @@ function PhonesPage() {
             ))}
           </div>
         )}
+
       </section>
     </PageShell>
   );
