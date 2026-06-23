@@ -22,19 +22,13 @@ function AboutPage() {
           From <span className="gradient-text">brokerage</span> to brand.
         </h1>
         <p className="mt-8 text-lg text-muted-foreground leading-relaxed">
-          Blue Apple started in 2021 as "Ali Apple" — a phone brokerage connecting buyers in Sudan
-          with genuine iPhones sourced from abroad. With no warehouse and no storefront, we built
-          trust entirely through social media, one satisfied customer at a time.
+          Blue Apple started in 2021 under the name "Ali Apple" — a phone brokerage service connecting customers in Sudan with genuine iPhones sourced from abroad. With no warehouse and no physical store, we built trust entirely through social media, one satisfied customer at a time.
         </p>
         <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-          As demand grew, we rebranded to Blue Apple — a premium, digital-first smartphone destination
-          focused on the Apple ecosystem. Instagram became our launchpad, helping us reach premium buyers
-          across Sudan who wanted authentic devices without the risk.
+          As demand grew, we rebranded to Blue Apple — evolving into a premium digital destination for smartphones, with a strong focus on the Apple ecosystem. Instagram became our launchpad, helping us reach customers seeking authentic devices and a safe buying experience in Sudan.
         </p>
         <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-          Today, Blue Apple is a trusted mobile commerce platform. We import genuine iPhones,
-          verify every device, and deliver them straight to your door — from the iPhone 13
-          Pro Max through the latest iPhone 17 Pro Max.
+          Today, Blue Apple is a trusted e-commerce platform for smartphones and accessories, offering delivery services to multiple countries. We import genuine iPhones, thoroughly inspect and verify each device's quality, and deliver it directly to your doorstep — from iPhone 13 Pro Max up to the latest iPhone 17 Pro Max.
         </p>
       </section>
 
