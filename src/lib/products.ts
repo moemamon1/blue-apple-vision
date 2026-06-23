@@ -1,7 +1,7 @@
-import phone from "@/assets/product-phone.png";
-import earbuds from "@/assets/product-earbuds.png";
-import watch from "@/assets/product-watch.png";
-import charger from "@/assets/product-charger.png";
+const phone = "";
+const earbuds = "";
+const watch = "";
+const charger = "";
 
 export type Product = {
   id: string;
