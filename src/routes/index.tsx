@@ -126,21 +126,27 @@ function PhonesPage() {
 
         <div className="relative">
           <p className="text-sm uppercase tracking-widest text-primary animate-fade-up stagger-1">
-            iPhones · Imported to Sudan
+            Trusted Service Since 2021
           </p>
 
           <h1 className="mt-3 text-5xl lg:text-6xl font-semibold tracking-tight animate-fade-up stagger-2">
-            Genuine Apple{" "}
+            Premium Phones.{" "}
             <span className="gradient-text-animated">
-              delivered in Sudan.
+              Trusted Service Since 2021.
             </span>
           </h1>
 
-          <p className="mt-4 text-lg text-muted-foreground max-w-xl animate-fade-up stagger-3">
-            We import authentic iPhones from abroad and deliver
-            them across Sudan — from the iPhone 13 Pro Max to
-            the latest iPhone 17 Pro Max.
-          </p>
+          <div className="mt-6 max-w-2xl space-y-4 text-lg text-muted-foreground">
+            <p className="animate-fade-up stagger-3">
+              Blue Apple specializes in smartphones and accessories, offering genuine products, fast delivery, and a 1-year warranty.
+            </p>
+            <p className="animate-fade-up stagger-4">
+              Enjoy exclusive upgrade offers and discounts with our Blue Apple Membership Card.
+            </p>
+            <p className="animate-fade-up stagger-5 font-medium text-foreground">
+              We don't just sell phones — we build trust.
+            </p>
+          </div>
         </div>
       </section>
 
