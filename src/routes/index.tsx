@@ -32,11 +32,13 @@ export const Route = createFileRoute("/")({
   component: PhonesPage,
 });
 
-// Sort collections so newest iPhone series appear first, SE/Budget last.
+// Sort collections: newest iPhone series first, then other phone collections,
+// then SE/Budget, then accessories and remaining collections last.
 function collectionRank(title: string): number {
   const m = title.match(/iPhone\s+(\d+)/i);
   if (m) return 1000 - parseInt(m[1], 10); // higher number = earlier
-  if (/SE|Budget/i.test(title)) return 9999;
+  if (/SE|Budget/i.test(title)) return 8000;
+  if (/accessor|charger|case|cable|airpod|earbud/i.test(title)) return 9000;
   return 5000;
 }
 
@@ -53,17 +55,13 @@ function PhonesPage() {
         const all = await fetchAllCollectionsWithProducts(50, 250);
         if (cancelled) return;
 
-        // Keep only iPhone-related collections; sort by series.
-        const iphoneCollections = all
-          .filter(
-            (c) =>
-              /iphone/i.test(c.title) ||
-              /se|budget/i.test(c.title)
-          )
+        // Show every published collection that has products — iPhones,
+        // accessories, and anything new the merchant adds in Shopify.
+        const visible = all
           .filter((c) => c.products.length > 0)
           .sort((a, b) => collectionRank(a.title) - collectionRank(b.title));
 
-        setCollections(iphoneCollections);
+        setCollections(visible);
       } catch (err: any) {
         console.error(err);
         if (!cancelled) {
