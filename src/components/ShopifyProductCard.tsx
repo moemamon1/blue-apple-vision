@@ -3,6 +3,7 @@ import { ShoppingBag, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import type { ShopifyProduct } from "@/lib/shopify";
+import { ProductImage } from "@/components/ProductImage";
 import { useCartStore } from "@/stores/cartStore";
 
 export function ShopifyProductCard({ product }: { product: ShopifyProduct }) {
@@ -39,30 +40,12 @@ export function ShopifyProductCard({ product }: { product: ShopifyProduct }) {
       params={{ handle: product.handle }}
       className="product-card group block rounded-3xl bg-card border border-border overflow-hidden shadow-soft"
     >
-      <div className="relative aspect-square bg-white overflow-hidden">
-        <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
-          <filter id="whitenBg" colorInterpolationFilters="sRGB">
-            <feComponentTransfer>
-              <feFuncR type="linear" slope="1.25" intercept="-0.18" />
-              <feFuncG type="linear" slope="1.25" intercept="-0.18" />
-              <feFuncB type="linear" slope="1.25" intercept="-0.18" />
-            </feComponentTransfer>
-          </filter>
-        </svg>
-        {image ? (
-          <img
-            src={image.url}
-            alt={image.altText ?? product.title}
-            loading="lazy"
-            style={{ filter: "url(#whitenBg)" }}
-            className="relative h-full w-full object-contain p-5 sm:p-8 transition-transform duration-700 group-hover:scale-110"
-          />
-        ) : (
-          <div className="relative h-full w-full grid place-items-center text-muted-foreground text-xs">
-            No image
-          </div>
-        )}
-      </div>
+      <ProductImage
+        src={image?.url}
+        alt={image?.altText ?? product.title}
+        className="aspect-square"
+        imageClassName="p-5 sm:p-8 transition-transform duration-700 group-hover:scale-110"
+      />
       <div className="p-4 sm:p-6">
         <p className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wider">
           {product.productType || "Smartphones"}

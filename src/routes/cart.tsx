@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Minus, Plus, X, ArrowRight, ShoppingBag, ExternalLink } from "lucide-react";
 import { PageShell } from "@/components/PageShell";
+import { ProductImage } from "@/components/ProductImage";
 import { useCartStore } from "@/stores/cartStore";
 
 export const Route = createFileRoute("/cart")({
@@ -36,13 +37,12 @@ function CartPage() {
             <div className="lg:col-span-2 space-y-4">
               {items.map((item) => (
                 <div key={item.variantId} className="flex gap-4 rounded-3xl border border-border bg-card p-4 sm:p-6 animate-fade-in">
-                  <div className="size-24 sm:size-32 shrink-0 rounded-2xl surface overflow-hidden">
-                    {item.image ? (
-                      <img src={item.image} alt={item.productTitle} className="h-full w-full object-contain p-2" />
-                    ) : (
-                      <div className="h-full w-full grid place-items-center text-muted-foreground text-xs">No image</div>
-                    )}
-                  </div>
+                  <ProductImage
+                    src={item.image}
+                    alt={item.productTitle}
+                    className="size-24 sm:size-32 shrink-0 rounded-2xl"
+                    imageClassName="p-2"
+                  />
                   <div className="flex-1 min-w-0">
                     <div className="flex justify-between gap-2">
                       <div>
