@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { PageShell } from "@/components/PageShell";
 import { fetchProductByHandle, fetchProducts } from "@/lib/shopify";
 import { ShopifyProductCard } from "@/components/ShopifyProductCard";
+import { ProductImage } from "@/components/ProductImage";
 import { useCartStore } from "@/stores/cartStore";
 
 export const Route = createFileRoute("/product/$handle")({
@@ -155,25 +156,20 @@ function ProductDetailPage() {
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
           {/* Gallery */}
           <div className="lg:sticky lg:top-24 self-start">
-            <div className="relative aspect-square rounded-3xl sm:rounded-[2rem] surface overflow-hidden">
-              <div className="absolute inset-0 bg-[image:var(--gradient-hero)] opacity-70" />
-              {activeImage ? (
-                <img
-                  src={activeImage}
-                  alt={product.title}
-                  className="relative h-full w-full object-contain p-8 sm:p-12 animate-fade-in"
-                />
-              ) : (
-                <div className="relative h-full w-full grid place-items-center text-muted-foreground">No image</div>
-              )}
-            </div>
+            <ProductImage
+              src={activeImage}
+              alt={product.title}
+              loading="eager"
+              className="aspect-square rounded-3xl sm:rounded-[2rem]"
+              imageClassName="p-8 sm:p-12 animate-fade-in"
+            />
             {images.length > 1 && (
               <div className="mt-3 sm:mt-4 grid grid-cols-4 gap-2 sm:gap-3">
                 {images.map((img: { url: string }, i: number) => (
                   <button
                     key={i}
                     onClick={() => setActiveImage(img.url)}
-                    className={`aspect-square rounded-xl sm:rounded-2xl surface border border-border overflow-hidden cursor-pointer hover:border-primary transition ${
+                    className={`aspect-square rounded-xl sm:rounded-2xl product-image-surface border border-border overflow-hidden cursor-pointer hover:border-primary transition ${
                       activeImage === img.url ? "border-primary ring-2 ring-primary/20" : ""
                     }`}
                   >

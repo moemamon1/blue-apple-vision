@@ -75,6 +75,7 @@
 
   --surface: oklch(0.975 0.005 240);
   --surface-elevated: oklch(1 0 0);
+  --product-image-background: oklch(1 0 0);
 
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.18 0.02 250);
@@ -124,6 +125,7 @@
 
   --surface: oklch(0.17 0.018 250);
   --surface-elevated: oklch(0.20 0.02 250);
+  --product-image-background: oklch(1 0 0);
 
   --card: oklch(0.17 0.018 250);
   --card-foreground: oklch(0.98 0 0);
@@ -194,6 +196,7 @@
 
   .hero-bg { background: var(--gradient-hero); }
   .surface { background: var(--color-surface); }
+  .product-image-surface { background: var(--product-image-background); }
 
   .shadow-soft { box-shadow: var(--shadow-soft); }
   .shadow-elevated { box-shadow: var(--shadow-elevated); }
