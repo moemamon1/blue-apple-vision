@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
 import { ShopifyProductCard } from "@/components/ShopifyProductCard";
-import { fetchProducts, type ShopifyProduct } from "@/lib/shopify";
+import { fetchProductsByCollectionId, type ShopifyProduct } from "@/lib/shopify";
 import { useState, useEffect } from "react";
+
+const ACCESSORIES_COLLECTION_ID = "323584295108";
 
 export const Route = createFileRoute("/accessories")({
   head: () => ({
@@ -22,7 +24,7 @@ function AccessoriesPage() {
 
   useEffect(() => {
     let cancelled = false;
-    fetchProducts("vendor:Apple AND (product_type:Accessories OR title:charger OR title:case OR title:cable)", 20)
+    fetchProductsByCollectionId(ACCESSORIES_COLLECTION_ID, 50)
       .then((data) => {
         if (!cancelled) setItems(data);
       })
