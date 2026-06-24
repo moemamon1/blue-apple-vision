@@ -46,7 +46,7 @@ export function ShopifyProductCard({ product }: { product: ShopifyProduct }) {
             src={image.url}
             alt={image.altText ?? product.title}
             loading="lazy"
-            style={{ mixBlendMode: "multiply" }}
+            style={{ filter: "contrast(1.06) brightness(1.04) saturate(1.02)" }}
             className="relative h-full w-full object-contain p-5 sm:p-8 transition-transform duration-700 group-hover:scale-110"
           />
         ) : (
