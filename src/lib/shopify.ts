@@ -9,6 +9,7 @@ export interface ShopifyVariantNode {
   price: { amount: string; currencyCode: string };
   availableForSale: boolean;
   selectedOptions?: Array<{ name: string; value: string }>;
+  image?: { url: string; altText: string | null } | null;
 }
 
 export interface ShopifyProduct {
@@ -47,6 +48,7 @@ const PRODUCT_FIELDS = `
         price { amount currencyCode }
         availableForSale
         selectedOptions { name value }
+        image { url altText }
       }
     }
   }
