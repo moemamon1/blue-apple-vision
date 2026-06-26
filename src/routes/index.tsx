@@ -55,10 +55,17 @@ function PhonesPage() {
         const all = await fetchAllCollectionsWithProducts(50, 250);
         if (cancelled) return;
 
-        // Show every published collection that has products — iPhones,
-        // accessories, and anything new the merchant adds in Shopify.
+        // Home page shows iPhone collections only. Accessories live on /accessories.
+        const ACCESSORIES_COLLECTION_ID = "323584295108";
+        const isAccessories = (c: ShopifyCollection) => {
+          const numericId = c.id.split("/").pop();
+          return (
+            numericId === ACCESSORIES_COLLECTION_ID ||
+            /accessor|charger|case|cable|airpod|earbud/i.test(c.title)
+          );
+        };
         const visible = all
-          .filter((c) => c.products.length > 0)
+          .filter((c) => c.products.length > 0 && !isAccessories(c))
           .sort((a, b) => collectionRank(a.title) - collectionRank(b.title));
 
         setCollections(visible);
