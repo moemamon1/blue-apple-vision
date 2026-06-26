@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Minus, Plus, ShoppingBag, Heart, Truck, Shield, RotateCw, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { PageShell } from "@/components/PageShell";
@@ -130,6 +130,17 @@ function ProductDetailPage() {
 
   const images = product.images.edges.map((e: { node: { url: string; altText: string | null } }) => e.node);
   const [activeImage, setActiveImage] = useState(images[0]?.url ?? "");
+
+  // Swap main image when variant changes (if variant has an image assigned)
+  useEffect(() => {
+    const variantImageUrl = selectedVariant?.image?.url;
+    if (variantImageUrl) {
+      setActiveImage(variantImageUrl);
+    } else if (images[0]?.url) {
+      setActiveImage(images[0].url);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedVariant?.id]);
 
   const handleAdd = async () => {
     if (!selectedVariant) return;
