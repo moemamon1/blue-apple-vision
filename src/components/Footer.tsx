@@ -20,17 +20,17 @@ export function Footer() {
           </div>
         </div>
 
-        {[
-          { title: "Shop", links: ["iPhones", "Accessories"] },
-          { title: "Company", links: ["About", "Contact"] },
-          { title: "Support", links: ["Returns", "Warranty", "Track Order"] },
-        ].map((col) => (
+        {([
+          { title: "Shop", links: [{ label: "iPhones", to: "/" }, { label: "Accessories", to: "/accessories" }] },
+          { title: "Company", links: [{ label: "About", to: "/about" }, { label: "Contact", to: "/contact" }] },
+          { title: "Support", links: [{ label: "Returns", to: "/contact" }, { label: "Warranty", to: "/contact" }, { label: "Track Order", to: "/contact" }] },
+        ] as const).map((col) => (
           <div key={col.title}>
             <h4 className="text-sm font-semibold mb-4">{col.title}</h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
               {col.links.map((l) => (
-                <li key={l}>
-                  <a href="#" className="hover:text-foreground transition-colors">{l}</a>
+                <li key={l.label}>
+                  <Link to={l.to} className="hover:text-foreground transition-colors">{l.label}</Link>
                 </li>
               ))}
             </ul>
