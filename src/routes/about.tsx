@@ -28,7 +28,7 @@ function AboutPage() {
           As demand grew, we rebranded to Blue Apple — evolving into a premium digital destination for smartphones, with a strong focus on the Apple ecosystem. Instagram became our launchpad, helping us reach customers seeking authentic devices and a safe buying experience in Sudan.
         </p>
         <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-          Today, Blue Apple is a trusted e-commerce platform for smartphones and accessories, offering delivery services to multiple countries. We import genuine iPhones, thoroughly inspect and verify each device's quality, and deliver it directly to your doorstep — from iPhone 13 Pro Max up to the latest iPhone 17 Pro Max.
+          Today, Blue Apple is a trusted e-commerce platform for smartphones and everyday tech, offering delivery services to multiple countries. We import genuine iPhones, thoroughly inspect and verify each device's quality, and deliver it directly to your doorstep — from iPhone 13 Pro Max up to the latest iPhone 17 Pro Max.
         </p>
       </section>
 

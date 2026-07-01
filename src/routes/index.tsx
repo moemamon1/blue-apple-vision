@@ -1,62 +1,51 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
+import { HeroCarousel, type HeroSlide } from "@/components/HeroCarousel";
 import { ShopifyProductCard } from "@/components/ShopifyProductCard";
 import {
   fetchAllCollectionsWithProducts,
+  fetchProductsByCollectionId,
   type ShopifyCollection,
   type ShopifyProduct,
 } from "@/lib/shopify";
 
+const ACCESSORIES_COLLECTION_ID = "323584295108";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "iPhones in Sudan — Blue Apple" },
+      { title: "Blue Apple — Genuine iPhones & Everyday Tech in Sudan" },
       {
         name: "description",
         content:
-          "Genuine iPhones imported from abroad and delivered across Sudan.",
+          "Genuine iPhones and everyday tech essentials, imported and delivered across Sudan since 2021.",
       },
-      {
-        property: "og:title",
-        content: "iPhones in Sudan — Blue Apple",
-      },
+      { property: "og:title", content: "Blue Apple — Genuine iPhones & Everyday Tech in Sudan" },
       {
         property: "og:description",
-        content:
-          "Genuine iPhones imported and delivered across Sudan.",
+        content: "Genuine iPhones and everyday tech, imported and delivered across Sudan.",
       },
     ],
   }),
-
-  component: PhonesPage,
+  component: HomePage,
 });
 
-// Sort collections: newest iPhone series first, then other phone collections,
-// then SE/Budget, then accessories and remaining collections last.
-function collectionRank(title: string): number {
-  const m = title.match(/iPhone\s+(\d+)/i);
-  if (m) return 1000 - parseInt(m[1], 10); // higher number = earlier
-  if (/SE|Budget/i.test(title)) return 8000;
-  if (/accessor|charger|case|cable|airpod|earbud/i.test(title)) return 9000;
-  return 5000;
-}
-
-function PhonesPage() {
-  const [collections, setCollections] = useState<ShopifyCollection[]>([]);
+function HomePage() {
+  const [phoneCollections, setPhoneCollections] = useState<ShopifyCollection[]>([]);
+  const [accessories, setAccessories] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
-
-    async function loadProducts() {
+    (async () => {
       try {
-        const all = await fetchAllCollectionsWithProducts(50, 250);
+        const [all, acc] = await Promise.all([
+          fetchAllCollectionsWithProducts(50, 250),
+          fetchProductsByCollectionId(ACCESSORIES_COLLECTION_ID, 20).catch(() => []),
+        ]);
         if (cancelled) return;
-
-        // Home page shows iPhone collections only. Accessories live on /accessories.
-        const ACCESSORIES_COLLECTION_ID = "323584295108";
         const isAccessories = (c: ShopifyCollection) => {
           const numericId = c.id.split("/").pop();
           return (
@@ -64,47 +53,65 @@ function PhonesPage() {
             /accessor|charger|case|cable|airpod|earbud/i.test(c.title)
           );
         };
-        const visible = all
-          .filter((c) => c.products.length > 0 && !isAccessories(c))
-          .sort((a, b) => collectionRank(a.title) - collectionRank(b.title));
-
-        setCollections(visible);
-      } catch (err: any) {
-        console.error(err);
-        if (!cancelled) {
-          setError(err.message || "Failed to load products");
-        }
+        const phones = all.filter((c) => c.products.length > 0 && !isAccessories(c));
+        setPhoneCollections(phones);
+        setAccessories(acc);
       } finally {
         if (!cancelled) setLoading(false);
       }
-    }
-
-    loadProducts();
+    })();
     return () => {
       cancelled = true;
     };
   }, []);
 
-  const allProducts: ShopifyProduct[] = (() => {
+  const featuredPhones = useMemo(() => {
     const seen = new Set<string>();
     const list: ShopifyProduct[] = [];
-    for (const c of collections) {
+    for (const c of phoneCollections) {
       for (const p of c.products) {
         if (!seen.has(p.id)) {
           seen.add(p.id);
           list.push(p);
         }
+        if (list.length >= 6) break;
       }
+      if (list.length >= 6) break;
     }
     return list;
-  })();
+  }, [phoneCollections]);
 
+  const firstPhoneImage = featuredPhones[0]?.images?.[0]?.url;
+  const firstAccessoryImage = accessories[0]?.images?.[0]?.url;
 
+  const slides: HeroSlide[] = [
+    {
+      eyebrow: "Smartphones",
+      title: "The latest iPhones.",
+      highlight: "Delivered in Sudan.",
+      description:
+        "From iPhone 13 Pro Max to iPhone 17 Pro Max — genuine, inspected, and backed by a 1-year warranty.",
+      ctaLabel: "Shop Phones",
+      ctaHref: "/phones",
+      image: firstPhoneImage,
+      imageAlt: "Latest iPhone",
+    },
+    {
+      eyebrow: "Everyday Use",
+      title: "Everyday essentials.",
+      highlight: "Built for your Apple life.",
+      description:
+        "Cases, chargers, cables, earbuds and more — the accessories that keep your day moving.",
+      ctaLabel: "Shop Everyday Use",
+      ctaHref: "/accessories",
+      image: firstAccessoryImage,
+      imageAlt: "Apple accessories",
+    },
+  ];
 
   return (
     <PageShell>
-      <section className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-10 sm:py-16 lg:py-24 hero-bg overflow-hidden">
-        {/* Animated background blobs */}
+      <section className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 pt-10 sm:pt-16 lg:pt-20 hero-bg overflow-hidden">
         <div
           className="hero-blob"
           style={{
@@ -133,17 +140,14 @@ function PhonesPage() {
           <p className="text-[11px] sm:text-sm uppercase tracking-widest text-primary animate-fade-up stagger-1">
             Trusted Service Since 2021
           </p>
-
           <h1 className="mt-3 text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] animate-fade-up stagger-2">
             Premium Phones.{" "}
-            <span className="gradient-text-animated">
-              Trusted Service Since 2021.
-            </span>
+            <span className="gradient-text-animated">Trusted Service Since 2021.</span>
           </h1>
-
           <div className="mt-5 sm:mt-6 max-w-2xl space-y-3 sm:space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
             <p className="animate-fade-up stagger-3">
-              Blue Apple specializes in smartphones and accessories, offering genuine products, fast delivery, and a 1-year warranty.
+              Blue Apple specializes in smartphones and everyday tech, offering genuine products,
+              fast delivery, and a 1-year warranty.
             </p>
             <p className="animate-fade-up stagger-4">
               Enjoy exclusive upgrade offers and discounts with our Blue Apple Membership Card.
@@ -155,34 +159,37 @@ function PhonesPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 pb-16 sm:pb-20">
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 pt-8 sm:pt-12">
+        <HeroCarousel slides={slides} />
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 pt-14 sm:pt-20 pb-16 sm:pb-20">
+        <div className="flex items-end justify-between mb-6 sm:mb-8">
+          <div>
+            <p className="text-[11px] sm:text-sm uppercase tracking-widest text-primary">Featured</p>
+            <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight">
+              Popular iPhones
+            </h2>
+          </div>
+          <Link
+            to="/phones"
+            className="text-sm text-primary hover:opacity-80 transition-opacity whitespace-nowrap"
+          >
+            View all →
+          </Link>
+        </div>
 
         {loading && (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
             {Array.from({ length: 6 }).map((_, i) => (
-              <div
-                key={i}
-                className="aspect-[3/4] rounded-2xl bg-muted/60 animate-pulse"
-              />
+              <div key={i} className="aspect-[3/4] rounded-2xl bg-muted/60 animate-pulse" />
             ))}
           </div>
         )}
 
-        {error && (
-          <p className="text-red-500 animate-fade-in">
-            Error: {error}
-          </p>
-        )}
-
-        {!loading && !error && allProducts.length === 0 && (
-          <p className="text-muted-foreground animate-fade-in">
-            No products found.
-          </p>
-        )}
-
-        {!loading && !error && allProducts.length > 0 && (
+        {!loading && featuredPhones.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
-            {allProducts.map((phone, idx) => (
+            {featuredPhones.map((phone, idx) => (
               <div
                 key={phone.id}
                 className={`animate-fade-up lift-card stagger-${Math.min((idx % 8) + 1, 8)}`}
@@ -192,7 +199,6 @@ function PhonesPage() {
             ))}
           </div>
         )}
-
       </section>
     </PageShell>
   );
