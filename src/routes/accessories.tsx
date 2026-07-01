@@ -37,21 +37,21 @@ function AccessoriesPage() {
   return (
     <PageShell>
       <section className="mx-auto max-w-7xl px-6 lg:px-10 py-16 lg:py-24 hero-bg">
-        <p className="text-sm uppercase tracking-widest text-primary">Accessories</p>
+        <p className="text-sm uppercase tracking-widest text-primary">Everyday Use</p>
         <h1 className="mt-3 text-5xl lg:text-6xl font-semibold tracking-tight">
-          Apple <span className="gradient-text">essentials.</span>
+          Everyday <span className="gradient-text">essentials.</span>
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-xl">
-          Chargers, cases, cables and more. Genuine Apple accessories imported and delivered across Sudan.
+          Chargers, cases, cables, earbuds and more. Genuine everyday tech imported and delivered across Sudan.
         </p>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 lg:px-10 pb-20">
-        {loading && <p className="text-muted-foreground">Loading accessories...</p>}
+        {loading && <p className="text-muted-foreground">Loading products...</p>}
         {!loading && items.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-muted-foreground">No accessories found yet.</p>
-            <p className="mt-2 text-sm text-muted-foreground">Check back soon or browse our iPhones.</p>
+            <p className="text-muted-foreground">Nothing here yet.</p>
+            <p className="mt-2 text-sm text-muted-foreground">Check back soon or browse our phones.</p>
           </div>
         )}
         {!loading && items.length > 0 && (
