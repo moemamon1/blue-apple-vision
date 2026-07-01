@@ -9,10 +9,10 @@ const ACCESSORIES_COLLECTION_ID = "323584295108";
 export const Route = createFileRoute("/accessories")({
   head: () => ({
     meta: [
-      { title: "Accessories — Blue Apple" },
-      { name: "description", content: "Premium Apple accessories imported to Sudan." },
-      { property: "og:title", content: "Accessories — Blue Apple" },
-      { property: "og:description", content: "Premium Apple accessories imported to Sudan." },
+      { title: "Everyday Use — Blue Apple" },
+      { name: "description", content: "Everyday tech essentials imported to Sudan." },
+      { property: "og:title", content: "Everyday Use — Blue Apple" },
+      { property: "og:description", content: "Everyday tech essentials imported to Sudan." },
     ],
   }),
   component: AccessoriesPage,
