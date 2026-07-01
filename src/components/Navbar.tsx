@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useCartStore } from "@/stores/cartStore";
 
 const links = [
-  { to: "/accessories", label: "Accessories" },
+  { to: "/phones", label: "Phones" },
+  { to: "/accessories", label: "Everyday Use" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
