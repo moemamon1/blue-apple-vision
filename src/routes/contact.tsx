@@ -44,7 +44,7 @@ function ContactPage() {
 
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="rounded-3xl border border-border bg-card p-8 shadow-soft space-y-4"
+          className="rounded-3xl border border-border bg-card p-5 sm:p-8 shadow-soft space-y-4"
         >
           {[
             { label: "Name", type: "text" },
