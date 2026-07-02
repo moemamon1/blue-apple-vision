@@ -63,24 +63,22 @@ function HomePage() {
     };
   }, []);
 
-  const featuredPhones = useMemo(() => {
-    const seen = new Set<string>();
-    const list: ShopifyProduct[] = [];
+  const firstPhoneImage = (() => {
     for (const c of phoneCollections) {
       for (const p of c.products) {
-        if (!seen.has(p.id)) {
-          seen.add(p.id);
-          list.push(p);
-        }
-        if (list.length >= 6) break;
+        const url = p.images?.edges?.[0]?.node?.url;
+        if (url) return url;
       }
-      if (list.length >= 6) break;
     }
-    return list;
-  }, [phoneCollections]);
-
-  const firstPhoneImage = featuredPhones[0]?.images?.[0]?.url;
-  const firstAccessoryImage = accessories[0]?.images?.[0]?.url;
+    return undefined;
+  })();
+  const firstAccessoryImage = (() => {
+    for (const p of accessories) {
+      const url = p.images?.edges?.[0]?.node?.url;
+      if (url) return url;
+    }
+    return undefined;
+  })();
 
   const slides: HeroSlide[] = [
     {
