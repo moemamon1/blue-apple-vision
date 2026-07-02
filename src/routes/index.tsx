@@ -159,43 +159,8 @@ function HomePage() {
         <HeroCarousel slides={slides} />
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 pt-14 sm:pt-20 pb-16 sm:pb-20">
-        <div className="flex items-end justify-between mb-6 sm:mb-8">
-          <div>
-            <p className="text-[11px] sm:text-sm uppercase tracking-widest text-primary">Featured</p>
-            <h2 className="mt-2 text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight">
-              Popular iPhones
-            </h2>
-          </div>
-          <Link
-            to="/phones"
-            className="text-sm text-primary hover:opacity-80 transition-opacity whitespace-nowrap"
-          >
-            View all →
-          </Link>
-        </div>
+      <div className="pb-16 sm:pb-20" />
 
-        {loading && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="aspect-[3/4] rounded-2xl bg-muted/60 animate-pulse" />
-            ))}
-          </div>
-        )}
-
-        {!loading && featuredPhones.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6">
-            {featuredPhones.map((phone, idx) => (
-              <div
-                key={phone.id}
-                className={`animate-fade-up lift-card stagger-${Math.min((idx % 8) + 1, 8)}`}
-              >
-                <ShopifyProductCard product={phone} />
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
     </PageShell>
   );
 }
