@@ -37,7 +37,7 @@ function CheckoutPage() {
               >
                 {i < step ? <Check className="size-4" /> : i + 1}
               </button>
-              <span className={`text-sm ${i === step ? "font-medium" : "text-muted-foreground"}`}>{s}</span>
+              <span className={`hidden sm:inline text-sm ${i === step ? "font-medium" : "text-muted-foreground"}`}>{s}</span>
               {i < steps.length - 1 && <div className="flex-1 h-px bg-border" />}
             </li>
           ))}
