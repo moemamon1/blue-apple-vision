@@ -17,13 +17,13 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   return (
     <PageShell>
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 py-20 grid lg:grid-cols-2 gap-16">
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-10 sm:py-20 grid lg:grid-cols-2 gap-10 sm:gap-16">
         <div>
-          <p className="text-sm uppercase tracking-widest text-primary">Contact</p>
-          <h1 className="mt-4 text-5xl lg:text-6xl font-semibold tracking-tight">
+          <p className="text-[11px] sm:text-sm uppercase tracking-widest text-primary">Contact</p>
+          <h1 className="mt-3 sm:mt-4 text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1]">
             Let's <span className="gradient-text">talk.</span>
           </h1>
-          <p className="mt-4 text-lg text-muted-foreground max-w-md">
+          <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-md">
             Have a question, feedback, or just want to say hi? We're here.
           </p>
           <div className="mt-10 space-y-5">
@@ -44,7 +44,7 @@ function ContactPage() {
 
         <form
           onSubmit={(e) => e.preventDefault()}
-          className="rounded-3xl border border-border bg-card p-8 shadow-soft space-y-4"
+          className="rounded-3xl border border-border bg-card p-5 sm:p-8 shadow-soft space-y-4"
         >
           {[
             { label: "Name", type: "text" },

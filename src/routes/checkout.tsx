@@ -19,11 +19,11 @@ function CheckoutPage() {
 
   return (
     <PageShell>
-      <section className="mx-auto max-w-6xl px-6 lg:px-10 py-12">
+      <section className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-10 py-8 sm:py-12">
         <Link to="/cart" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
           <ArrowLeft className="size-4" /> Back to bag
         </Link>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight">Checkout</h1>
+        <h1 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight">Checkout</h1>
 
         {/* Stepper */}
         <ol className="mt-8 flex items-center gap-2">
@@ -37,7 +37,7 @@ function CheckoutPage() {
               >
                 {i < step ? <Check className="size-4" /> : i + 1}
               </button>
-              <span className={`text-sm ${i === step ? "font-medium" : "text-muted-foreground"}`}>{s}</span>
+              <span className={`hidden sm:inline text-sm ${i === step ? "font-medium" : "text-muted-foreground"}`}>{s}</span>
               {i < steps.length - 1 && <div className="flex-1 h-px bg-border" />}
             </li>
           ))}
