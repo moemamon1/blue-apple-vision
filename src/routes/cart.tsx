@@ -22,9 +22,9 @@ function CartPage() {
 
   return (
     <PageShell>
-      <section className="mx-auto max-w-7xl px-6 lg:px-10 py-12">
-        <h1 className="text-4xl font-semibold tracking-tight">Your bag</h1>
-        <p className="mt-2 text-muted-foreground">{totalItems} item{totalItems !== 1 && "s"}</p>
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-8 sm:py-12">
+        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">Your bag</h1>
+        <p className="mt-2 text-sm sm:text-base text-muted-foreground">{totalItems} item{totalItems !== 1 && "s"}</p>
 
         {items.length === 0 ? (
           <div className="mt-16 text-center">
