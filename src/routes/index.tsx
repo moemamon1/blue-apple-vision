@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PageShell } from "@/components/PageShell";
-import { HeroCarousel, type HeroSlide } from "@/components/HeroCarousel";
+import { HeroPanel } from "@/components/HeroPanel";
 import {
   fetchAllCollectionsWithProducts,
   fetchProductsByCollectionId,
