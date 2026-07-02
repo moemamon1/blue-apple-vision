@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
-import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { PageShell } from "@/components/PageShell";
 import { HeroCarousel, type HeroSlide } from "@/components/HeroCarousel";
-import { ShopifyProductCard } from "@/components/ShopifyProductCard";
 import {
   fetchAllCollectionsWithProducts,
   fetchProductsByCollectionId,
