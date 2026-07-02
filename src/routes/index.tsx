@@ -63,47 +63,36 @@ function HomePage() {
     };
   }, []);
 
-  const firstPhoneImage = (() => {
+  const phoneImages = (() => {
+    const seen = new Set<string>();
+    const list: string[] = [];
     for (const c of phoneCollections) {
       for (const p of c.products) {
         const url = p.images?.edges?.[0]?.node?.url;
-        if (url) return url;
+        if (url && !seen.has(url)) {
+          seen.add(url);
+          list.push(url);
+        }
+        if (list.length >= 8) break;
       }
+      if (list.length >= 8) break;
     }
-    return undefined;
-  })();
-  const firstAccessoryImage = (() => {
-    for (const p of accessories) {
-      const url = p.images?.edges?.[0]?.node?.url;
-      if (url) return url;
-    }
-    return undefined;
+    return list;
   })();
 
-  const slides: HeroSlide[] = [
-    {
-      eyebrow: "Smartphones",
-      title: "The latest iPhones.",
-      highlight: "Delivered in Sudan.",
-      description:
-        "From iPhone 13 Pro Max to iPhone 17 Pro Max — genuine, inspected, and backed by a 1-year warranty.",
-      ctaLabel: "Shop Phones",
-      ctaHref: "/phones",
-      image: firstPhoneImage,
-      imageAlt: "Latest iPhone",
-    },
-    {
-      eyebrow: "Everyday Use",
-      title: "Everyday essentials.",
-      highlight: "Built for your Apple life.",
-      description:
-        "Cases, chargers, cables, earbuds and more — the accessories that keep your day moving.",
-      ctaLabel: "Shop Everyday Use",
-      ctaHref: "/accessories",
-      image: firstAccessoryImage,
-      imageAlt: "Apple accessories",
-    },
-  ];
+  const accessoryImages = (() => {
+    const seen = new Set<string>();
+    const list: string[] = [];
+    for (const p of accessories) {
+      const url = p.images?.edges?.[0]?.node?.url;
+      if (url && !seen.has(url)) {
+        seen.add(url);
+        list.push(url);
+      }
+      if (list.length >= 8) break;
+    }
+    return list;
+  })();
 
   return (
     <PageShell>
@@ -155,8 +144,30 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 pt-8 sm:pt-12">
-        <HeroCarousel slides={slides} />
+      <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 pt-8 sm:pt-12 space-y-6 sm:space-y-8">
+        <HeroPanel
+          eyebrow="Smartphones"
+          title="The latest iPhones."
+          highlight="Delivered in Sudan."
+          description="From iPhone 13 Pro Max to iPhone 17 Pro Max — genuine, inspected, and backed by a 1-year warranty."
+          ctaLabel="Shop Phones"
+          ctaHref="/phones"
+          images={phoneImages}
+          imageAlt="Latest iPhone"
+          eager
+        />
+        <HeroPanel
+          eyebrow="Everyday Use"
+          title="Everyday essentials."
+          highlight="Built for your Apple life."
+          description="Cases, chargers, cables, earbuds and more — the accessories that keep your day moving."
+          ctaLabel="Shop Everyday Use"
+          ctaHref="/accessories"
+          images={accessoryImages}
+          imageAlt="Apple accessories"
+          reverse
+          intervalMs={4200}
+        />
       </section>
 
       <div className="pb-16 sm:pb-20" />
