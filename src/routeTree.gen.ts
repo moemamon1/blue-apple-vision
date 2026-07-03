@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PhonesRouteImport } from './routes/phones'
+import { Route as EverydayEssentialsRouteImport } from './routes/everyday-essentials'
 import { Route as DealsRouteImport } from './routes/deals'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CheckoutRouteImport } from './routes/checkout'
@@ -23,6 +24,11 @@ import { Route as ProductHandleRouteImport } from './routes/product.$handle'
 const PhonesRoute = PhonesRouteImport.update({
   id: '/phones',
   path: '/phones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EverydayEssentialsRoute = EverydayEssentialsRouteImport.update({
+  id: '/everyday-essentials',
+  path: '/everyday-essentials',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DealsRoute = DealsRouteImport.update({
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/deals': typeof DealsRoute
+  '/everyday-essentials': typeof EverydayEssentialsRoute
   '/phones': typeof PhonesRoute
   '/product/$handle': typeof ProductHandleRoute
   '/product/$id': typeof ProductIdRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/deals': typeof DealsRoute
+  '/everyday-essentials': typeof EverydayEssentialsRoute
   '/phones': typeof PhonesRoute
   '/product/$handle': typeof ProductHandleRoute
   '/product/$id': typeof ProductIdRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/deals': typeof DealsRoute
+  '/everyday-essentials': typeof EverydayEssentialsRoute
   '/phones': typeof PhonesRoute
   '/product/$handle': typeof ProductHandleRoute
   '/product/$id': typeof ProductIdRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/deals'
+    | '/everyday-essentials'
     | '/phones'
     | '/product/$handle'
     | '/product/$id'
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/deals'
+    | '/everyday-essentials'
     | '/phones'
     | '/product/$handle'
     | '/product/$id'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/deals'
+    | '/everyday-essentials'
     | '/phones'
     | '/product/$handle'
     | '/product/$id'
@@ -155,6 +167,7 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
   DealsRoute: typeof DealsRoute
+  EverydayEssentialsRoute: typeof EverydayEssentialsRoute
   PhonesRoute: typeof PhonesRoute
   ProductHandleRoute: typeof ProductHandleRoute
   ProductIdRoute: typeof ProductIdRoute
@@ -167,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/phones'
       fullPath: '/phones'
       preLoaderRoute: typeof PhonesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/everyday-essentials': {
+      id: '/everyday-essentials'
+      path: '/everyday-essentials'
+      fullPath: '/everyday-essentials'
+      preLoaderRoute: typeof EverydayEssentialsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/deals': {
@@ -243,6 +263,7 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
   DealsRoute: DealsRoute,
+  EverydayEssentialsRoute: EverydayEssentialsRoute,
   PhonesRoute: PhonesRoute,
   ProductHandleRoute: ProductHandleRoute,
   ProductIdRoute: ProductIdRoute,

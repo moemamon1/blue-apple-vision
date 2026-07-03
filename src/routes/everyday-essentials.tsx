@@ -6,19 +6,19 @@ import { useState, useEffect } from "react";
 
 const ACCESSORIES_COLLECTION_ID = "323584295108";
 
-export const Route = createFileRoute("/accessories")({
+export const Route = createFileRoute("/everyday-essentials")({
   head: () => ({
     meta: [
-      { title: "Everyday Use — Blue Apple" },
-      { name: "description", content: "Everyday tech essentials imported to Sudan." },
-      { property: "og:title", content: "Everyday Use — Blue Apple" },
-      { property: "og:description", content: "Everyday tech essentials imported to Sudan." },
+      { title: "Everyday Essential — Blue Apple" },
+      { name: "description", content: "Everyday essential tech products imported to Sudan." },
+      { property: "og:title", content: "Everyday Essential — Blue Apple" },
+      { property: "og:description", content: "Everyday essential tech products imported to Sudan." },
     ],
   }),
-  component: AccessoriesPage,
+  component: EverydayEssentialsPage,
 });
 
-function AccessoriesPage() {
+function EverydayEssentialsPage() {
   const [items, setItems] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -37,12 +37,12 @@ function AccessoriesPage() {
   return (
     <PageShell>
       <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-10 sm:py-16 lg:py-24 hero-bg">
-        <p className="text-[11px] sm:text-sm uppercase tracking-widest text-primary">Accessories</p>
+        <p className="text-[11px] sm:text-sm uppercase tracking-widest text-primary">Everyday Essential</p>
         <h1 className="mt-3 text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1]">
-          <span className="gradient-text">Accessories.</span>
+          Everyday <span className="gradient-text">essentials.</span>
         </h1>
         <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-xl">
-          Chargers, cases, cables, earbuds and more. Genuine everyday tech imported and delivered across Sudan.
+          The essentials that keep your day moving. Genuine everyday tech imported and delivered across Sudan.
         </p>
       </section>
 
