@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/PageShell";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -28,9 +28,8 @@ function ContactPage() {
           </p>
           <div className="mt-10 space-y-5">
             {[
-              { Icon: Mail, label: "hello@blueapple.com" },
-              { Icon: Phone, label: "+1 (800) 555-0199" },
-              { Icon: MapPin, label: "1 Infinite Loop, Cupertino, CA" },
+              { Icon: Mail, label: "abdosh123f40@gmail.com" },
+              { Icon: Phone, label: "+971 52 936 3727" },
             ].map(({ Icon, label }) => (
               <div key={label} className="flex items-center gap-4">
                 <div className="size-11 grid place-items-center rounded-xl bg-primary/10 text-primary">

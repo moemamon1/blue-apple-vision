@@ -159,7 +159,6 @@ function HomePage() {
         <HeroPanel
           eyebrow="Everyday Use"
           title="Everyday essentials."
-          highlight="Built for your Apple life."
           description="Cases, chargers, cables, earbuds and more — the accessories that keep your day moving."
           ctaLabel="Shop Everyday Use"
           ctaHref="/accessories"
