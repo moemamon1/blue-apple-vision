@@ -157,10 +157,10 @@ function HomePage() {
           eager
         />
         <HeroPanel
-          eyebrow="Everyday Use"
-          title="Everyday essentials."
+          eyebrow="Accessories"
+          title="Accessories."
           description="Cases, chargers, cables, earbuds and more — the accessories that keep your day moving."
-          ctaLabel="Shop Everyday Use"
+          ctaLabel="Shop Accessories"
           ctaHref="/accessories"
           images={accessoryImages}
           imageAlt="Apple accessories"
