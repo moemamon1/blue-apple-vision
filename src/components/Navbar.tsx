@@ -5,7 +5,8 @@ import { useCartStore } from "@/stores/cartStore";
 
 const links = [
   { to: "/phones", label: "Phones" },
-  { to: "/accessories", label: "Everyday Use" },
+  { to: "/accessories", label: "Accessories" },
+  { to: "/everyday-essentials", label: "Everyday Essential" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
