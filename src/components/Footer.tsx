@@ -21,7 +21,7 @@ export function Footer() {
         </div>
 
         {([
-          { title: "Shop", links: [{ label: "Phones", to: "/phones" }, { label: "Everyday Use", to: "/accessories" }] },
+          { title: "Shop", links: [{ label: "Phones", to: "/phones" }, { label: "Accessories", to: "/accessories" }, { label: "Everyday Essential", to: "/everyday-essentials" }] },
           { title: "Company", links: [{ label: "About", to: "/about" }, { label: "Contact", to: "/contact" }] },
           { title: "Support", links: [{ label: "Returns", to: "/contact" }, { label: "Warranty", to: "/contact" }, { label: "Track Order", to: "/contact" }] },
         ] as const).map((col) => (
