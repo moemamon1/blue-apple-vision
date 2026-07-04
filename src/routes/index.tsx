@@ -58,6 +58,7 @@ function HomePage() {
         const phones = all.filter((c) => c.products.length > 0 && !isAccessories(c));
         setPhoneCollections(phones);
         setAccessories(acc);
+        setEssentials(ess);
       } finally {
         if (!cancelled) setLoading(false);
       }
