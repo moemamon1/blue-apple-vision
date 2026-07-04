@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { PageShell } from "@/components/PageShell";
 import { HeroPanel } from "@/components/HeroPanel";
+import { useT } from "@/lib/i18n";
 import {
   fetchAllCollectionsWithProducts,
   fetchProductsByCollectionId,
