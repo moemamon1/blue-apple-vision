@@ -24,7 +24,7 @@ function EverydayEssentialsPage() {
 
   useEffect(() => {
     let cancelled = false;
-    fetchProductsByCollectionId(ACCESSORIES_COLLECTION_ID, 50)
+    fetchProductsByCollectionId(EVERYDAY_ESSENTIALS_COLLECTION_ID, 50)
       .then((data) => {
         if (!cancelled) setItems(data);
       })
