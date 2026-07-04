@@ -30,7 +30,7 @@ export function ShopifyProductCard({ product }: { product: ShopifyProduct }) {
         price: variant.price,
         quantity: 1,
       });
-      toast.success(`${product.title} added to cart`);
+      toast.success(`${product.title} — ${t("cart.added")}`);
     } finally {
       setAdding(false);
     }
