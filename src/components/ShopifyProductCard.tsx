@@ -5,8 +5,10 @@ import { toast } from "sonner";
 import type { ShopifyProduct } from "@/lib/shopify";
 import { ProductImage } from "@/components/ProductImage";
 import { useCartStore } from "@/stores/cartStore";
+import { useT } from "@/lib/i18n";
 
 export function ShopifyProductCard({ product }: { product: ShopifyProduct }) {
+  const t = useT();
   const image = product.images.edges[0]?.node;
   const price = product.priceRange.minVariantPrice;
   const variant = product.variants.edges[0]?.node;
