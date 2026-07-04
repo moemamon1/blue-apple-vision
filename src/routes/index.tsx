@@ -144,44 +144,37 @@ function HomePage() {
 
         <div className="relative">
           <p className="text-[11px] sm:text-sm uppercase tracking-widest text-primary animate-fade-up stagger-1">
-            Trusted Service Since 2021
+            {t("home.eyebrow")}
           </p>
           <h1 className="mt-3 text-3xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] animate-fade-up stagger-2">
-            Premium Phones.{" "}
-            <span className="gradient-text-animated">Trusted Service Since 2021.</span>
+            {t("home.title.a")}{" "}
+            <span className="gradient-text-animated">{t("home.title.b")}</span>
           </h1>
           <div className="mt-5 sm:mt-6 max-w-2xl space-y-3 sm:space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
-            <p className="animate-fade-up stagger-3">
-              Blue Apple specializes in smartphones and everyday tech, offering genuine products,
-              fast delivery, and a 1-year warranty.
-            </p>
-            <p className="animate-fade-up stagger-4">
-              Enjoy exclusive upgrade offers and discounts with our Blue Apple Membership Card.
-            </p>
-            <p className="animate-fade-up stagger-5 font-medium text-foreground">
-              We don't just sell phones — we build trust.
-            </p>
+            <p className="animate-fade-up stagger-3">{t("home.p1")}</p>
+            <p className="animate-fade-up stagger-4">{t("home.p2")}</p>
+            <p className="animate-fade-up stagger-5 font-medium text-foreground">{t("home.p3")}</p>
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 pt-8 sm:pt-12 space-y-6 sm:space-y-8">
         <HeroPanel
-          eyebrow="Smartphones"
-          title="The latest iPhones."
-          highlight="Delivered in Sudan."
-          description="From iPhone 13 Pro Max to iPhone 17 Pro Max — genuine, inspected, and backed by a 1-year warranty."
-          ctaLabel="Shop Phones"
+          eyebrow={t("home.phones.eyebrow")}
+          title={t("home.phones.title")}
+          highlight={t("home.phones.highlight")}
+          description={t("home.phones.desc")}
+          ctaLabel={t("home.phones.cta")}
           ctaHref="/phones"
           images={phoneImages}
           imageAlt="Latest iPhone"
           eager
         />
         <HeroPanel
-          eyebrow="Accessories"
-          title="Accessories."
-          description="Cases, chargers, cables, earbuds and more — the accessories that keep your day moving."
-          ctaLabel="Shop Accessories"
+          eyebrow={t("home.acc.eyebrow")}
+          title={t("home.acc.title")}
+          description={t("home.acc.desc")}
+          ctaLabel={t("home.acc.cta")}
           ctaHref="/accessories"
           images={accessoryImages}
           imageAlt="Apple accessories"
@@ -189,10 +182,10 @@ function HomePage() {
           intervalMs={4200}
         />
         <HeroPanel
-          eyebrow="Everyday Essential"
-          title="Everyday essentials."
-          description="The essentials that keep your day moving — imported and delivered across Sudan."
-          ctaLabel="Shop Essentials"
+          eyebrow={t("home.ess.eyebrow")}
+          title={t("home.ess.title")}
+          description={t("home.ess.desc")}
+          ctaLabel={t("home.ess.cta")}
           ctaHref="/everyday-essentials"
           images={essentialImages}
           imageAlt="Everyday essentials"
