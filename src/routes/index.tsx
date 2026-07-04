@@ -33,6 +33,7 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const t = useT();
   const [phoneCollections, setPhoneCollections] = useState<ShopifyCollection[]>([]);
   const [accessories, setAccessories] = useState<ShopifyProduct[]>([]);
   const [essentials, setEssentials] = useState<ShopifyProduct[]>([]);
