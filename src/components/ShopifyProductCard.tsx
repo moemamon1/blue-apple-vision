@@ -5,8 +5,10 @@ import { toast } from "sonner";
 import type { ShopifyProduct } from "@/lib/shopify";
 import { ProductImage } from "@/components/ProductImage";
 import { useCartStore } from "@/stores/cartStore";
+import { useT } from "@/lib/i18n";
 
 export function ShopifyProductCard({ product }: { product: ShopifyProduct }) {
+  const t = useT();
   const image = product.images.edges[0]?.node;
   const price = product.priceRange.minVariantPrice;
   const variant = product.variants.edges[0]?.node;
@@ -28,7 +30,7 @@ export function ShopifyProductCard({ product }: { product: ShopifyProduct }) {
         price: variant.price,
         quantity: 1,
       });
-      toast.success(`${product.title} added to cart`);
+      toast.success(`${product.title} — ${t("cart.added")}`);
     } finally {
       setAdding(false);
     }
@@ -48,7 +50,7 @@ export function ShopifyProductCard({ product }: { product: ShopifyProduct }) {
       />
       <div className="p-4 sm:p-6">
         <p className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wider">
-          {product.productType || "Smartphones"}
+          {product.productType || t("card.smartphones")}
         </p>
         <h3 className="mt-1 font-semibold text-sm sm:text-lg line-clamp-1">{product.title}</h3>
         <p className="mt-1.5 text-xs text-muted-foreground line-clamp-2 min-h-[2rem]">
@@ -65,7 +67,7 @@ export function ShopifyProductCard({ product }: { product: ShopifyProduct }) {
             onClick={handleAdd}
             disabled={adding || !variant}
             className="shrink-0 size-9 sm:size-10 grid place-items-center rounded-full bg-foreground text-background transition-all duration-300 disabled:opacity-50"
-            aria-label="Add to cart"
+            aria-label={t("pd.addToCart")}
           >
             {adding ? <Loader2 className="size-4 animate-spin" /> : <ShoppingBag className="size-4" />}
           </button>

@@ -1,20 +1,22 @@
 import { Link } from "@tanstack/react-router";
-import { Search, ShoppingBag, User, Menu, X } from "lucide-react";
+import { Search, ShoppingBag, User, Menu, X, Globe } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useCartStore } from "@/stores/cartStore";
-
-const links = [
-  { to: "/phones", label: "Phones" },
-  { to: "/accessories", label: "Accessories" },
-  { to: "/everyday-essentials", label: "Everyday Essential" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
-] as const;
+import { useI18n } from "@/lib/i18n";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const totalItems = useCartStore((s) => s.items.reduce((n, i) => n + i.quantity, 0));
+  const { t, lang, setLang } = useI18n();
+
+  const links = [
+    { to: "/phones", label: t("nav.phones") },
+    { to: "/accessories", label: t("nav.accessories") },
+    { to: "/everyday-essentials", label: t("nav.everyday") },
+    { to: "/about", label: t("nav.about") },
+    { to: "/contact", label: t("nav.contact") },
+  ] as const;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -22,6 +24,8 @@ export function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const toggleLang = () => setLang(lang === "en" ? "ar" : "en");
 
   return (
     <header
@@ -52,13 +56,21 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-0.5 sm:gap-1">
-          <button className="hidden sm:grid size-10 place-items-center rounded-full hover:bg-muted transition-colors" aria-label="Search">
+          <button
+            onClick={toggleLang}
+            className="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 rounded-full hover:bg-muted transition-colors text-xs font-medium"
+            aria-label="Toggle language"
+          >
+            <Globe className="size-4" />
+            {t("nav.langToggle")}
+          </button>
+          <button className="hidden sm:grid size-10 place-items-center rounded-full hover:bg-muted transition-colors" aria-label={t("nav.search")}>
             <Search className="size-[18px]" />
           </button>
           <Link
             to="/cart"
             className="size-10 grid place-items-center rounded-full hover:bg-muted transition-colors relative"
-            aria-label="Cart"
+            aria-label={t("nav.cart")}
           >
             <ShoppingBag className="size-[18px]" />
             {totalItems > 0 && (
@@ -67,13 +79,13 @@ export function Navbar() {
               </span>
             )}
           </Link>
-          <button className="hidden sm:grid size-10 place-items-center rounded-full hover:bg-muted transition-colors" aria-label="Account">
+          <button className="hidden sm:grid size-10 place-items-center rounded-full hover:bg-muted transition-colors" aria-label={t("nav.account")}>
             <User className="size-[18px]" />
           </button>
           <button
             className="md:hidden size-10 grid place-items-center rounded-full hover:bg-muted"
             onClick={() => setOpen((v) => !v)}
-            aria-label="Menu"
+            aria-label={t("nav.menu")}
           >
             {open ? <X className="size-[18px]" /> : <Menu className="size-[18px]" />}
           </button>
@@ -90,6 +102,14 @@ export function Navbar() {
                 </Link>
               </li>
             ))}
+            <li>
+              <button
+                onClick={() => { toggleLang(); setOpen(false); }}
+                className="inline-flex items-center gap-2 py-2 text-foreground"
+              >
+                <Globe className="size-4" /> {t("nav.langToggle")}
+              </button>
+            </li>
           </ul>
         </div>
       )}
