@@ -4,7 +4,7 @@ import { ShopifyProductCard } from "@/components/ShopifyProductCard";
 import { fetchProductsByCollectionId, type ShopifyProduct } from "@/lib/shopify";
 import { useState, useEffect } from "react";
 
-const ACCESSORIES_COLLECTION_ID = "323584295108";
+const EVERYDAY_ESSENTIALS_COLLECTION_ID = "323856171204";
 
 export const Route = createFileRoute("/everyday-essentials")({
   head: () => ({
