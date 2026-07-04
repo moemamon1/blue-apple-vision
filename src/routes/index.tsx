@@ -186,6 +186,16 @@ function HomePage() {
           reverse
           intervalMs={4200}
         />
+        <HeroPanel
+          eyebrow="Everyday Essential"
+          title="Everyday essentials."
+          description="The essentials that keep your day moving — imported and delivered across Sudan."
+          ctaLabel="Shop Essentials"
+          ctaHref="/everyday-essentials"
+          images={essentialImages}
+          imageAlt="Everyday essentials"
+          intervalMs={4600}
+        />
       </section>
 
       <div className="pb-16 sm:pb-20" />
