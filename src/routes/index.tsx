@@ -10,6 +10,7 @@ import {
 } from "@/lib/shopify";
 
 const ACCESSORIES_COLLECTION_ID = "323584295108";
+const EVERYDAY_ESSENTIALS_COLLECTION_ID = "323856171204";
 
 export const Route = createFileRoute("/")({
   head: () => ({
