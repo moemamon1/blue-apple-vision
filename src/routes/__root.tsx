@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { Toaster } from "sonner";
 import { useCartSync } from "@/hooks/useCartSync";
+import { I18nProvider, useT } from "@/lib/i18n";
 
 import appCss from "../styles.css?url";
 
