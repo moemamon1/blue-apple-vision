@@ -34,21 +34,24 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const [phoneCollections, setPhoneCollections] = useState<ShopifyCollection[]>([]);
   const [accessories, setAccessories] = useState<ShopifyProduct[]>([]);
+  const [essentials, setEssentials] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
-        const [all, acc] = await Promise.all([
+        const [all, acc, ess] = await Promise.all([
           fetchAllCollectionsWithProducts(50, 250),
           fetchProductsByCollectionId(ACCESSORIES_COLLECTION_ID, 20).catch(() => []),
+          fetchProductsByCollectionId(EVERYDAY_ESSENTIALS_COLLECTION_ID, 20).catch(() => []),
         ]);
         if (cancelled) return;
         const isAccessories = (c: ShopifyCollection) => {
           const numericId = c.id.split("/").pop();
           return (
             numericId === ACCESSORIES_COLLECTION_ID ||
+            numericId === EVERYDAY_ESSENTIALS_COLLECTION_ID ||
             /accessor|charger|case|cable|airpod|earbud/i.test(c.title)
           );
         };
