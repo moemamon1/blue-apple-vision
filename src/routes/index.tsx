@@ -99,6 +99,20 @@ function HomePage() {
     return list;
   })();
 
+  const essentialImages = (() => {
+    const seen = new Set<string>();
+    const list: string[] = [];
+    for (const p of essentials) {
+      const url = p.images?.edges?.[0]?.node?.url;
+      if (url && !seen.has(url)) {
+        seen.add(url);
+        list.push(url);
+      }
+      if (list.length >= 8) break;
+    }
+    return list;
+  })();
+
   return (
     <PageShell>
       <section className="relative mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 pt-10 sm:pt-16 lg:pt-20 hero-bg overflow-hidden">
