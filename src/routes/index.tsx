@@ -10,6 +10,7 @@ import {
 } from "@/lib/shopify";
 
 const ACCESSORIES_COLLECTION_ID = "323584295108";
+const EVERYDAY_ESSENTIALS_COLLECTION_ID = "323856171204";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -33,27 +34,31 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const [phoneCollections, setPhoneCollections] = useState<ShopifyCollection[]>([]);
   const [accessories, setAccessories] = useState<ShopifyProduct[]>([]);
+  const [essentials, setEssentials] = useState<ShopifyProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
-        const [all, acc] = await Promise.all([
+        const [all, acc, ess] = await Promise.all([
           fetchAllCollectionsWithProducts(50, 250),
           fetchProductsByCollectionId(ACCESSORIES_COLLECTION_ID, 20).catch(() => []),
+          fetchProductsByCollectionId(EVERYDAY_ESSENTIALS_COLLECTION_ID, 20).catch(() => []),
         ]);
         if (cancelled) return;
         const isAccessories = (c: ShopifyCollection) => {
           const numericId = c.id.split("/").pop();
           return (
             numericId === ACCESSORIES_COLLECTION_ID ||
+            numericId === EVERYDAY_ESSENTIALS_COLLECTION_ID ||
             /accessor|charger|case|cable|airpod|earbud/i.test(c.title)
           );
         };
         const phones = all.filter((c) => c.products.length > 0 && !isAccessories(c));
         setPhoneCollections(phones);
         setAccessories(acc);
+        setEssentials(ess);
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -84,6 +89,20 @@ function HomePage() {
     const seen = new Set<string>();
     const list: string[] = [];
     for (const p of accessories) {
+      const url = p.images?.edges?.[0]?.node?.url;
+      if (url && !seen.has(url)) {
+        seen.add(url);
+        list.push(url);
+      }
+      if (list.length >= 8) break;
+    }
+    return list;
+  })();
+
+  const essentialImages = (() => {
+    const seen = new Set<string>();
+    const list: string[] = [];
+    for (const p of essentials) {
       const url = p.images?.edges?.[0]?.node?.url;
       if (url && !seen.has(url)) {
         seen.add(url);
@@ -166,6 +185,16 @@ function HomePage() {
           imageAlt="Apple accessories"
           reverse
           intervalMs={4200}
+        />
+        <HeroPanel
+          eyebrow="Everyday Essential"
+          title="Everyday essentials."
+          description="The essentials that keep your day moving — imported and delivered across Sudan."
+          ctaLabel="Shop Essentials"
+          ctaHref="/everyday-essentials"
+          images={essentialImages}
+          imageAlt="Everyday essentials"
+          intervalMs={4600}
         />
       </section>
 
