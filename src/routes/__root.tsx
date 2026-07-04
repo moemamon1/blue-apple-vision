@@ -125,9 +125,11 @@ function RootComponent() {
   useCartSync();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Outlet />
-      <Toaster position="top-center" richColors />
-    </QueryClientProvider>
+    <I18nProvider>
+      <QueryClientProvider client={queryClient}>
+        <Outlet />
+        <Toaster position="top-center" richColors />
+      </QueryClientProvider>
+    </I18nProvider>
   );
 }
