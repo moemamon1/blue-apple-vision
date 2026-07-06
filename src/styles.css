@@ -128,13 +128,13 @@
 }
 
 @layer base {
-  * { border-color: hsl(var(--color-border)); }
+  * { border-color: var(--color-border); }
 
   html { scroll-behavior: smooth; }
 
   body {
-    background-color: hsl(var(--color-background));
-    color: hsl(var(--color-foreground));
+    background-color: var(--color-background);
+    color: var(--color-foreground);
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
