@@ -181,8 +181,8 @@
   .hero-bg { background: hsl(var(--background)); }
   .hero-blob { display: none !important; }
 
-  .surface { background: hsl(var(--color-surface)); }
-  .product-image-surface { background: hsl(var(--product-image-background)); }
+  .surface { background: var(--color-surface); }
+  .product-image-surface { background: var(--product-image-background); }
 
   .shadow-soft { box-shadow: var(--shadow-soft); }
   .shadow-elevated { box-shadow: var(--shadow-elevated); }
