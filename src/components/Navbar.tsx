@@ -41,7 +41,7 @@ export function Navbar() {
           <span className="font-serif text-lg font-bold">Blue Apple</span>
         </Link>
 
-        <ul className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
+        <ul className="hidden md:flex items-center gap-8 text-[11px] uppercase tracking-[0.18em] font-semibold text-muted-foreground">
           {links.map((l) => (
             <li key={l.to}>
               <Link
