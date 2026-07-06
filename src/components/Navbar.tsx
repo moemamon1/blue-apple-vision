@@ -29,16 +29,16 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
-        scrolled ? "glass shadow-soft" : "bg-transparent"
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+        scrolled ? "glass" : "bg-background"
       }`}
     >
-      <nav className="mx-auto max-w-7xl px-6 lg:px-10 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-semibold text-lg tracking-tight">
-          <span className="size-7 rounded-xl bg-[image:var(--gradient-primary)] shadow-glow grid place-items-center text-primary-foreground text-xs font-bold">
-            B
+      <nav className="mx-auto max-w-7xl px-6 lg:px-10 h-16 flex items-center justify-between border-b border-border/60">
+        <Link to="/" className="flex items-center gap-2.5 tracking-tight">
+          <span className="size-8 grid place-items-center border border-primary text-primary text-[11px] font-bold font-mono">
+            BA
           </span>
-          <span>Blue Apple</span>
+          <span className="font-serif text-lg font-bold">Blue Apple</span>
         </Link>
 
         <ul className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
