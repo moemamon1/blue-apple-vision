@@ -31,18 +31,18 @@ export function Footer() {
   ];
 
   return (
-    <footer className="border-t border-border mt-20 sm:mt-32">
+    <footer className="border-t border-border mt-20 sm:mt-32 bg-background">
       <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-10 py-12 sm:py-16 grid gap-10 sm:gap-12 grid-cols-2 md:grid-cols-4">
         <div className="col-span-2 md:col-span-1">
-          <Link to="/" className="flex items-center gap-2 font-semibold text-lg">
-            <span className="size-7 rounded-xl bg-[image:var(--gradient-primary)] grid place-items-center text-primary-foreground text-xs font-bold">B</span>
-            Blue Apple
+          <Link to="/" className="flex items-center gap-2.5">
+            <span className="size-8 grid place-items-center border border-primary text-primary text-[11px] font-bold font-mono">BA</span>
+            <span className="font-serif text-lg font-bold">Blue Apple</span>
           </Link>
-          <p className="mt-4 text-sm text-muted-foreground max-w-xs">
+          <p className="mt-4 text-sm text-muted-foreground max-w-xs leading-relaxed">
             {t("footer.tagline")}
           </p>
           <div className="flex gap-2 mt-6">
-            <a href="#" className="size-9 grid place-items-center rounded-full bg-muted hover:bg-primary hover:text-primary-foreground transition-colors">
+            <a href="#" className="size-9 grid place-items-center border border-border hover:border-primary hover:text-primary transition-colors" aria-label="Instagram">
               <Instagram className="size-4" />
             </a>
           </div>
@@ -50,7 +50,7 @@ export function Footer() {
 
         {cols.map((col) => (
           <div key={col.title}>
-            <h4 className="text-sm font-semibold mb-4">{col.title}</h4>
+            <h4 className="text-[10px] uppercase font-bold tracking-[0.22em] text-accent mb-4">{col.title}</h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
               {col.links.map((l) => (
                 <li key={l.label}>
