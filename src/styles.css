@@ -171,14 +171,14 @@
   /* Legacy tokens — now render as flat editorial styles (no gradients/glow) */
   .gradient-text,
   .gradient-text-animated {
-    color: hsl(var(--accent));
+    color: var(--accent);
     background: none;
     -webkit-background-clip: initial;
     background-clip: initial;
     font-style: italic;
   }
 
-  .hero-bg { background: hsl(var(--background)); }
+  .hero-bg { background: var(--background); }
   .hero-blob { display: none !important; }
 
   .surface { background: var(--color-surface); }
@@ -189,8 +189,8 @@
   .shadow-glow { box-shadow: none; }
 
   .btn-primary {
-    background: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
+    background: var(--primary);
+    color: var(--primary-foreground);
     border-radius: 0;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -199,13 +199,13 @@
     transition: background 0.2s var(--transition-smooth);
   }
   .btn-primary:hover {
-    background: hsl(var(--accent));
+    background: var(--accent);
   }
 
   .btn-outline {
     background: transparent;
-    color: hsl(var(--primary));
-    border: 1px solid hsl(var(--primary));
+    color: var(--primary);
+    border: 1px solid var(--primary);
     border-radius: 0;
     text-transform: uppercase;
     letter-spacing: 0.15em;
@@ -214,8 +214,8 @@
     transition: all 0.2s var(--transition-smooth);
   }
   .btn-outline:hover {
-    background: hsl(var(--primary));
-    color: hsl(var(--primary-foreground));
+    background: var(--primary);
+    color: var(--primary-foreground);
   }
 
   .rule {
@@ -228,7 +228,7 @@
     text-transform: uppercase;
     letter-spacing: 0.22em;
     font-weight: 700;
-    color: hsl(var(--accent));
+    color: var(--accent);
   }
 
   .product-card { transition: opacity 0.2s ease; }
@@ -251,7 +251,7 @@
     transition: border-color 0.2s var(--transition-smooth);
   }
   .lift-card:hover {
-    border-color: hsl(var(--accent));
+    border-color: var(--accent);
   }
 
   @media (prefers-reduced-motion: reduce) {
