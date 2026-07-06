@@ -220,7 +220,7 @@
 
   .rule {
     height: 1px;
-    background: hsl(var(--accent) / 0.3);
+    background: color-mix(in srgb, var(--accent) 30%, transparent);
   }
 
   .eyebrow {
